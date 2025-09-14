@@ -1,8 +1,20 @@
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { TableOrdersAdmin } from '../components/dashboard/orders/TableOrdersAdmin';
-import { OrderWithCustomer, OrderResponse } from '../interfaces/order.interface';
+import { TableOrdersAdmin } from '../../components/dashboard/orders/TableOrdersAdmin'; 
+import type { OrderWithCustomer } from '../../interfaces/order.interface'; // solo lo que necesitamos
 import { useEffect, useState } from 'react';
+
+// Definimos localmente OrderResponse para evitar conflictos en Netlify
+interface OrderResponse {
+  id: number;
+  status: string;
+  total_amount: number;
+  created_at: string;
+  customer?: {
+    full_name: string;
+    email: string;
+  };
+}
 
 export const DashboardOrdersPage = () => {
   const [data, setData] = useState<OrderResponse[]>([]);
@@ -19,7 +31,6 @@ export const DashboardOrdersPage = () => {
         setLoading(false);
       }
     };
-
     fetchOrders();
   }, []);
 

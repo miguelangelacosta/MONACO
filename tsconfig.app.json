@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "tailwind.config.js", "CellPhonesPage.tsx", "data"]
+  "include": ["src", "tailwind.config.js", "CellPhonesPage.tsx", "data", "src/pages/dashboard"]
 }

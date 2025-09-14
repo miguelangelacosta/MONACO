@@ -1,19 +1,19 @@
-export * from './HomePage';
-export * from './CellPhonesPage';
-export * from './AboutPage';
-export * from './CellPhonePage';
-export * from './LoginPage';
-export * from './RegisterPage';
-export * from './OrdersUserPage';
-export * from './CheckoutPage';
-export * from './ThankyouPage';
-export * from './OrderUserPage';
+// src/pages/index.ts
+/* Páginas públicas */
+export { HomePage } from './HomePage';
+export { CellPhonesPage } from './CellPhonesPage';
+export { AboutPage } from './AboutPage';
+export { CellPhonePage } from './CellPhonePage';
+export { LoginPage } from './LoginPage';
+export { RegisterPage } from './RegisterPage';
+export { OrdersUserPage } from './OrdersUserPage';
+export { CheckoutPage } from './CheckoutPage';
+export { ThankyouPage } from './ThankyouPage';
+export { OrderUserPage } from './OrderUserPage';
 
-/* ********************************** */
-/*           DASHBOARD PAGES          */
-/* ********************************** */
-export * from './dashboard/DashboardProductsPage';
-export * from './dashboard/DashboardNewProductPage';
-export * from './dashboard/DashboardProductSlugPage';
-export * from "./dashboard/DashboardOrdersPage"
-export * from "./dashboard/DashboardOrderPage"
+/* Dashboard Pages */
+export { DashboardProductsPage } from './dashboard/DashboardProductsPage';
+export { DashboardNewProductPage } from './dashboard/DashboardNewProductPage';
+export { DashboardProductSlugPage } from './dashboard/DashboardProductSlugPage';
+
+

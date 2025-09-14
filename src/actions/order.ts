@@ -5,7 +5,7 @@ import { supabase } from '../supabase/client';
 interface OrderItem {
 	quantity: number;
 	price: number;
-	variantId?: number;
+	variantId?: number; // ✅ debe ser number
 	variants?: {
 		color_name?: string;
 		storage?: string;
@@ -56,7 +56,7 @@ export const createOrder = async (order: OrderInput) => {
 		const { data: variantData, error: variantError } = await supabase
 			.from('variants')
 			.select('stock')
-			.eq('id', item.variantId)
+			.eq('id', Number(item.variantId)) // ✅ convertir a número
 			.single<{ stock: number }>();
 
 		if (variantError) throw new Error(variantError.message);
@@ -97,9 +97,9 @@ export const createOrder = async (order: OrderInput) => {
 	if (orderError) throw new Error(orderError.message);
 
 	// Items de la orden
-	const orderItems = order.cartItems.map((item: OrderItem) => ({
+	const orderItems = order.cartItems.map((item) => ({
 		order_id: orderData.id,
-		variant_id: item.variantId,
+		variant_id: Number(item.variantId), // ✅ convertir a número
 		quantity: item.quantity,
 		price: item.price,
 	}));
@@ -115,7 +115,7 @@ export const createOrder = async (order: OrderInput) => {
 		const { data: variantData } = await supabase
 			.from('variants')
 			.select('stock')
-			.eq('id', item.variantId)
+			.eq('id', Number(item.variantId)) // ✅ convertir a número
 			.single<{ stock: number }>();
 
 		if (!variantData) throw new Error('No se encontró la variante');
@@ -124,7 +124,7 @@ export const createOrder = async (order: OrderInput) => {
 		const { error: updatedStockError } = await supabase
 			.from('variants')
 			.update({ stock: newStock })
-			.eq('id', item.variantId);
+			.eq('id', Number(item.variantId));
 
 		if (updatedStockError) throw new Error('No se pudo actualizar el stock de la variante');
 	}
@@ -201,7 +201,7 @@ export const getOrderById = async (orderId: number) => {
 			postalCode: order.addresses?.postal_code,
 			country: order.addresses?.country,
 		},
-		orderItems: order.order_items.map((item: OrderItem) => ({
+		orderItems: order.order_items.map((item) => ({
 			quantity: item.quantity,
 			price: item.price,
 			color_name: item.variants?.color_name,
@@ -257,7 +257,7 @@ export const getOrderByIdAdmin = async (id: number) => {
 			postalCode: order.addresses?.postal_code,
 			country: order.addresses?.country,
 		},
-		orderItems: order.order_items.map((item: OrderItem) => ({
+		orderItems: order.order_items.map((item) => ({
 			quantity: item.quantity,
 			price: item.price,
 			color_name: item.variants?.color_name,

@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
 				element: <HomePage />,
 			},
 			{
-				path: 'celulares',
+				path: 'tienda',
 				element: <CellPhonesPage />,
 			},
 			{

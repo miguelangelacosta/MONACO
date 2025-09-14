@@ -5,7 +5,7 @@ export const Newsletter = () => {
 			<div
 				className='absolute inset-0 bg-cover bg-center opacity-70 h-full'
 				style={{
-					backgroundImage: 'url(/img/background-newsletter.webp)',
+					backgroundImage: 'url(/image/background-newsletter.webp)',
 				}}
 			/>
 

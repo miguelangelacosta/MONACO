@@ -8,7 +8,7 @@ import { ProductDescription } from '../components/one-product/ProductDescription
 import { GridImages } from '../components/one-product/GridImages';
 import { useProduct } from '../hooks/products/useProduct';
 import { useEffect, useMemo, useState } from 'react';
-import  { VariantProduct } from '../interfaces';
+import  type { VariantProduct } from '../interfaces';
 import { Tag } from '../components/shared/Tag';
 import { Loader } from '../components/shared/Loader';
 import { useCounterStore } from '../store/counter.store';

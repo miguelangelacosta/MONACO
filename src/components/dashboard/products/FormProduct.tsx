@@ -20,7 +20,7 @@ import {
 	useUpdateProduct,
 } from '../../../hooks';
 import { Loader } from '../../shared/Loader';
-import { JSONContent } from '@tiptap/react';
+import  type { JSONContent } from '@tiptap/react';
 
 interface Props {
 	titleForm: string;
@@ -38,12 +38,11 @@ export const FormProduct = ({ titleForm }: Props) => {
 		resolver: zodResolver(productSchema),
 	});
 
-	const { slug } = useParams<{ slug: string }>();
-
-	const { product, isLoading } = useProduct(slug || '');
+	const { slug } = useParams();
+	const { product, isLoading } = useProduct(slug ?? '');
 	const { mutate: createProduct, isPending } = useCreateProduct();
 	const { mutate: updateProduct, isPending: isUpdatePending } =
-		useUpdateProduct(product?.id || '');
+		useUpdateProduct(product?.id ?? '');
 
 	const navigate = useNavigate();
 
@@ -54,13 +53,13 @@ export const FormProduct = ({ titleForm }: Props) => {
 			setValue('brand', product.brand);
 			setValue(
 				'features',
-				product.features.map((f: string) => ({ value: f }))
+				(product.features ?? []).map((f: string) => ({ value: f }))
 			);
 			setValue('description', product.description as JSONContent);
-			setValue('images', product.images);
+			setValue('images', product.images ?? []);
 			setValue(
 				'variants',
-				product.variants.map(v => ({
+				(product.variants ?? []).map(v => ({
 					id: v.id,
 					stock: v.stock,
 					price: v.price,
@@ -114,6 +113,7 @@ export const FormProduct = ({ titleForm }: Props) => {
 			<div className='flex justify-between items-center'>
 				<div className='flex items-center gap-3'>
 					<button
+						type='button'
 						className='bg-white p-1.5 rounded-md shadow-sm border border-slate-200 transition-all group hover:scale-105'
 						onClick={() => navigate(-1)}
 					>
@@ -195,7 +195,9 @@ export const FormProduct = ({ titleForm }: Props) => {
 					<Editor
 						setValue={setValue}
 						errors={errors}
-						initialContent={product?.description as JSONContent}
+						initialContent={
+							(product?.description as JSONContent) ?? null
+						}
 					/>
 				</SectionFormProduct>
 

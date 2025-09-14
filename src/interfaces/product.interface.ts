@@ -1,5 +1,5 @@
-import { JSONContent } from '@tiptap/react';
-import { Json } from '../supabase/supabase';
+import type { JSONContent } from '@tiptap/react';
+import type { Json } from '../supabase/supabase';
 
 export interface Color {
 	name: string;

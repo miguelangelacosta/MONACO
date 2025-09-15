@@ -1,6 +1,7 @@
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import  { ProductFormValues, productSchema } from '../../../lib/validators';
+import { ProductFormValues, productSchema } from '../../../lib/validators';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SectionFormProduct } from './SectionFormProduct';
@@ -13,32 +14,24 @@ import { UploaderImages } from './UploaderImages';
 import { Editor } from './Editor';
 import { useCreateProduct, useProduct, useUpdateProduct } from '../../../hooks';
 import { Loader } from '../../shared/Loader';
-import { JSONContent } from '@tiptap/react';
-import  { VariantProduct } from '../../../interfaces';
+import type { JSONContent } from '@tiptap/react';
+import type { VariantProduct } from '../../../interfaces';
 
 interface Props {
   titleForm: string;
 }
 
 export const FormProduct = ({ titleForm }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    watch,
-    control,
-  } = useForm<ProductFormValues>({
-    resolver: zodResolver(productSchema),
-  });
+  const { register, handleSubmit, formState: { errors }, setValue, watch, control } =
+    useForm<ProductFormValues>({
+      resolver: zodResolver(productSchema),
+    });
 
   const { slug } = useParams<{ slug: string }>();
-
   const { product, isLoading } = useProduct(slug || '');
   const { mutate: createProduct, isPending } = useCreateProduct();
   const { mutate: updateProduct, isPending: isUpdatePending } =
     useUpdateProduct(product?.id || '');
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,57 +39,34 @@ export const FormProduct = ({ titleForm }: Props) => {
       setValue('name', product.name);
       setValue('slug', product.slug);
       setValue('brand', product.brand);
-      setValue(
-        'features',
-        product.features.map((f: string) => ({ value: f }))
-      );
-      setValue('description', product.description as JSONContent);
-      setValue('images', product.images);
-      setValue(
-        'variants',
-        product.variants.map((v: VariantProduct) => ({
-          id: v.id,
-          stock: v.stock,
-          price: v.price,
-          storage: v.storage,
-          color: v.color,
-          colorName: v.color_name,
-        }))
-      );
+      setValue('features', product.features.map(f => ({ value: f })));
+      setValue('description', product.description as JSONContent ?? { type: 'doc', content: [] });
+      setValue('images', product.images.map(url => ({ url, name: url.split('/').pop() || 'image' })));
+      setValue('variants', product.variants.map((v: VariantProduct) => ({
+        id: v.id,
+        stock: v.stock,
+        price: v.price,
+        storage: v.storage,
+        color: v.color,
+        colorName: v.color_name,
+      })));
     }
   }, [product, isLoading, setValue]);
 
   const onSubmit = handleSubmit((data) => {
-    const features = data.features.map((feature) => feature.value);
+    const features = data.features.map(f => f.value);
+    const images = data.images.map(img => 'file' in img ? img.file : img.url);
 
-    if (slug) {
-      updateProduct({
-        name: data.name,
-        brand: data.brand,
-        slug: data.slug,
-        variants: data.variants,
-        images: data.images,
-        description: data.description,
-        features,
-      });
-    } else {
-      createProduct({
-        name: data.name,
-        brand: data.brand,
-        slug: data.slug,
-        variants: data.variants,
-        images: data.images,
-        description: data.description,
-        features,
-      });
-    }
+    const payload = { ...data, features, images };
+
+    if (slug) updateProduct(payload);
+    else createProduct(payload);
   });
 
   const watchName = watch('name');
 
   useEffect(() => {
     if (!watchName) return;
-
     const generatedSlug = generateSlug(watchName);
     setValue('slug', generatedSlug, { shouldValidate: true });
   }, [watchName, setValue]);
@@ -111,25 +81,14 @@ export const FormProduct = ({ titleForm }: Props) => {
             className="bg-white p-1.5 rounded-md shadow-sm border border-slate-200 transition-all group hover:scale-105"
             onClick={() => navigate(-1)}
           >
-            <IoIosArrowBack
-              size={18}
-              className="transition-all group-hover:scale-125"
-            />
+            <IoIosArrowBack size={18} className="transition-all group-hover:scale-125" />
           </button>
-          <h2 className="font-bold tracking-tight text-2xl capitalize">
-            {titleForm}
-          </h2>
+          <h2 className="font-bold tracking-tight text-2xl capitalize">{titleForm}</h2>
         </div>
       </div>
 
-      <form
-        className="grid grid-cols-1 lg:grid-cols-3 gap-8 auto-rows-max flex-1"
-        onSubmit={onSubmit}
-      >
-        <SectionFormProduct
-          titleSection="Detalles del Producto"
-          className="lg:col-span-2 lg:row-span-2"
-        >
+      <form className="grid grid-cols-1 lg:grid-cols-3 gap-8 auto-rows-max flex-1" onSubmit={onSubmit}>
+        <SectionFormProduct titleSection="Detalles del Producto" className="lg:col-span-2 lg:row-span-2">
           <InputForm
             type="text"
             placeholder="Ejemplo: iPhone 13 Pro Max"
@@ -143,30 +102,11 @@ export const FormProduct = ({ titleForm }: Props) => {
         </SectionFormProduct>
 
         <SectionFormProduct>
-          <InputForm
-            type="text"
-            label="Slug"
-            name="slug"
-            placeholder="iphone-13-pro-max"
-            register={register}
-            errors={errors}
-          />
-
-          <InputForm
-            type="text"
-            label="Marca"
-            name="brand"
-            placeholder="Apple"
-            register={register}
-            errors={errors}
-            required
-          />
+          <InputForm type="text" label="Slug" name="slug" placeholder="iphone-13-pro-max" register={register} errors={errors} />
+          <InputForm type="text" label="Marca" name="brand" placeholder="Apple" register={register} errors={errors} required />
         </SectionFormProduct>
 
-        <SectionFormProduct
-          titleSection="Variantes del Producto"
-          className="lg:col-span-2 h-fit"
-        >
+        <SectionFormProduct titleSection="Variantes del Producto" className="lg:col-span-2 h-fit">
           <VariantsInput control={control} errors={errors} register={register} />
         </SectionFormProduct>
 
@@ -174,28 +114,13 @@ export const FormProduct = ({ titleForm }: Props) => {
           <UploaderImages errors={errors} setValue={setValue} watch={watch} />
         </SectionFormProduct>
 
-        <SectionFormProduct
-          titleSection="Descripción del producto"
-          className="col-span-full"
-        >
-          <Editor
-            setValue={setValue}
-            errors={errors}
-            initialContent={product?.description as JSONContent}
-          />
+        <SectionFormProduct titleSection="Descripción del producto" className="col-span-full">
+          <Editor setValue={setValue} errors={errors} initialContent={product?.description as JSONContent ?? { type: 'doc', content: [] }} />
         </SectionFormProduct>
 
         <div className="flex gap-3 absolute top-0 right-0">
-          <button
-            className="btn-secondary-outline"
-            type="button"
-            onClick={() => navigate(-1)}
-          >
-            Cancelar
-          </button>
-          <button className="btn-primary" type="submit">
-            Guardar Producto
-          </button>
+          <button className="btn-secondary-outline" type="button" onClick={() => navigate(-1)}>Cancelar</button>
+          <button className="btn-primary" type="submit">Guardar Producto</button>
         </div>
       </form>
     </div>

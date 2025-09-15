@@ -36,8 +36,8 @@ export const CheckoutPage = () => {
 					className='text-4xl font-bold self-center tracking-tighter transition-all md:text-5xl md:self-start'
 				>
 					<p>
-						MONA
-						<span className='text-cyan-600'>co</span>
+						Celulares
+						<span className='text-cyan-600'>Baratos</span>
 					</p>
 				</Link>
 			</header>

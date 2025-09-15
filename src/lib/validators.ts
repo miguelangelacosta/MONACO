@@ -1,8 +1,6 @@
-// src/lib/validators.ts
-import { z } from 'zod';
 import { JSONContent } from '@tiptap/react';
+import { z } from 'zod';
 
-// --- ESQUEMA DE REGISTRO DE USUARIO ---
 export const userRegisterSchema = z.object({
   email: z.string().email('El correo electrónico no es válido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
@@ -10,47 +8,48 @@ export const userRegisterSchema = z.object({
   phone: z.string().optional(),
 });
 
-export type UserRegisterFormValues = z.infer<typeof userRegisterSchema>;
-
-// --- ESQUEMA DE DIRECCIÓN ---
 export const addressSchema = z.object({
-  addressLine1: z
-    .string()
+  addressLine1: z.string()
     .min(1, 'La dirección es requerida')
-    .max(100, 'La dirección no debe exceder los 100 caracteres'),
-  addressLine2: z
-    .string()
-    .max(100, 'La dirección no debe exceder los 100 caracteres')
+    .max(100, 'La dirección no debe exceder los 100 carácteres'),
+  addressLine2: z.string()
+    .max(100, 'La dirección no debe exceder los 100 carácteres')
     .optional(),
   city: z.string()
     .min(1, 'La ciudad es requerida')
-    .max(50, 'La ciudad no debe exceder los 50 caracteres'),
+    .max(50, 'La ciudad no debe exceder los 50 carácteres'),
   state: z.string()
     .min(1, 'El estado es requerido')
-    .max(50, 'El estado no debe exceder los 50 caracteres'),
+    .max(50, 'El estado no debe exceder los 50 carácteres'),
   postalCode: z.string()
-    .max(10, 'El código postal no debe exceder los 10 caracteres')
+    .max(10, 'El código postal no debe exceder los 10 carácteres')
     .optional(),
   country: z.string().min(1, 'El país es requerido'),
 });
 
+export type UserRegisterFormValues = z.infer<typeof userRegisterSchema>;
 export type AddressFormValues = z.infer<typeof addressSchema>;
 
-// --- FUNCIONES AUXILIARES ---
+// Función para validar contenido vacío
 const isContentEmpty = (value: JSONContent): boolean => {
-  if (!value || !Array.isArray(value.content) || value.content.length === 0) return true;
+  if (!value || !Array.isArray(value.content) || value.content.length === 0) {
+    return true;
+  }
+
   return !value.content.some(
     node =>
       node.type === 'paragraph' &&
       node.content &&
       Array.isArray(node.content) &&
       node.content.some(
-        textNode => textNode.type === 'text' && textNode.text?.trim() !== ''
+        textNode =>
+          textNode.type === 'text' &&
+          textNode.text &&
+          textNode.text.trim() !== ''
       )
   );
 };
 
-// --- ESQUEMA DE PRODUCTO ---
 export const productSchema = z.object({
   name: z.string().min(1, 'El nombre del producto es obligatorio'),
   brand: z.string().min(1, 'La marca del producto es obligatoria'),
@@ -63,6 +62,7 @@ export const productSchema = z.object({
     })
   ),
   description: z.custom<JSONContent>((value): value is JSONContent => {
+    // ✅ Aseguramos que 'value' sea JSONContent y no unknown
     return value != null && !isContentEmpty(value as JSONContent);
   }, { message: 'La descripción no puede estar vacía' }),
   variants: z.array(
@@ -78,12 +78,7 @@ export const productSchema = z.object({
       colorName: z.string().min(1, 'El nombre del color es obligatorio'),
     })
   ).min(1, 'Debe haber al menos una variante'),
-  images: z.array(
-    z.object({
-      url: z.string().min(1, 'La URL es requerida'),
-      name: z.string().min(1, 'El nombre es requerido'),
-    })
-  ).min(1, 'Debe haber al menos una imagen'),
+  images: z.array(z.any()).min(1, 'Debe haber al menos una imagen'),
 });
 
 export type ProductFormValues = z.infer<typeof productSchema>;

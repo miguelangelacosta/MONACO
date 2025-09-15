@@ -8,12 +8,13 @@ import { ProductDescription } from '../components/one-product/ProductDescription
 import { GridImages } from '../components/one-product/GridImages';
 import { useProduct } from '../hooks/products/useProduct';
 import { useEffect, useMemo, useState } from 'react';
-import type { VariantProduct, } from '../interfaces';
+import type { VariantProduct } from '../interfaces';
 import { Tag } from '../components/shared/Tag';
 import { Loader } from '../components/shared/Loader';
 import { useCounterStore } from '../store/counter.store';
 import { useCartStore } from '../store/cart.store';
 import toast from 'react-hot-toast';
+import type { JSONContent } from '@tiptap/react';
 
 interface Acc {
   [key: string]: {
@@ -39,16 +40,13 @@ export const CellPhonePage = () => {
 
   const navigate = useNavigate();
 
-  // Agrupamos las variantes por color
+  // Agrupamos variantes por color
   const colors = useMemo(() => {
     return (
       product?.variants.reduce((acc: Acc, variant: VariantProduct) => {
         const { color, color_name, storage } = variant;
         if (!acc[color]) {
-          acc[color] = {
-            name: color_name,
-            storages: [],
-          };
+          acc[color] = { name: color_name, storages: [] };
         }
         if (!acc[color].storages.includes(storage)) {
           acc[color].storages.push(storage);
@@ -58,27 +56,27 @@ export const CellPhonePage = () => {
     );
   }, [product?.variants]);
 
-  // Obtener el primer color predeterminado
   const availableColors = Object.keys(colors);
+
+  // Selección de color predeterminado
   useEffect(() => {
     if (!selectedColor && availableColors.length > 0) {
       setSelectedColor(availableColors[0]);
     }
-  }, [availableColors, selectedColor, product]);
+  }, [availableColors, selectedColor]);
 
-  // Actualizar almacenamiento al cambiar de color
+  // Selección de almacenamiento predeterminado
   useEffect(() => {
     if (selectedColor && colors[selectedColor] && !selectedStorage) {
       setSelectedStorage(colors[selectedColor].storages[0]);
     }
   }, [selectedColor, colors, selectedStorage]);
 
-  // Obtener la variante seleccionada
+  // Selección de variante
   useEffect(() => {
     if (selectedColor && selectedStorage) {
       const variant = product?.variants.find(
-        (variant: VariantProduct) =>
-          variant.color === selectedColor && variant.storage === selectedStorage
+        v => v.color === selectedColor && v.storage === selectedStorage
       );
       setSelectedVariant(variant ?? null);
     }
@@ -86,43 +84,41 @@ export const CellPhonePage = () => {
 
   const isOutOfStock = selectedVariant?.stock === 0;
 
-  // Añadir al carrito
   const addToCart = () => {
-    if (selectedVariant) {
-      addItem({
-        variantId: selectedVariant.id,
-        productId: product?.id || '',
-        name: product?.name || '',
-        image: product?.images[0] || '',
-        color: selectedVariant.color_name,
-        storage: selectedVariant.storage,
-        price: selectedVariant.price,
-        quantity: count,
-      });
-      toast.success('Producto añadido al carrito', {
-        position: 'bottom-right',
-      });
-    }
+    if (!selectedVariant) return;
+
+    addItem({
+      variantId: selectedVariant.id,
+      productId: product?.id || '',
+      name: product?.name || '',
+      image: product?.images[0] || '',
+      color: selectedVariant.color_name,
+      storage: selectedVariant.storage,
+      price: selectedVariant.price,
+      quantity: count,
+    });
+
+    toast.success('Producto añadido al carrito', { position: 'bottom-right' });
   };
 
-  // Comprar ahora
   const buyNow = () => {
-    if (selectedVariant) {
-      addItem({
-        variantId: selectedVariant.id,
-        productId: product?.id || '',
-        name: product?.name || '',
-        image: product?.images[0] || '',
-        color: selectedVariant.color_name,
-        storage: selectedVariant.storage,
-        price: selectedVariant.price,
-        quantity: count,
-      });
-      navigate('/checkout');
-    }
+    if (!selectedVariant) return;
+
+    addItem({
+      variantId: selectedVariant.id,
+      productId: product?.id || '',
+      name: product?.name || '',
+      image: product?.images[0] || '',
+      color: selectedVariant.color_name,
+      storage: selectedVariant.storage,
+      price: selectedVariant.price,
+      quantity: count,
+    });
+
+    navigate('/checkout');
   };
 
-  // Resetear slug y selecciones al cambiar URL
+  // Reset slug y selecciones al cambiar URL
   useEffect(() => {
     setCurrentSlug(slug);
     setSelectedColor(null);
@@ -160,11 +156,8 @@ export const CellPhonePage = () => {
 
           {/* Características */}
           <ul className="space-y-2 ml-7 my-10">
-            {product.features.map((feature: string) => (
-              <li
-                key={feature}
-                className="text-sm flex items-center gap-2 tracking-tight font-medium"
-              >
+            {product.features.map(feature => (
+              <li key={feature} className="text-sm flex items-center gap-2 tracking-tight font-medium">
                 <span className="bg-black w-[5px] h-[5px] rounded-full" />
                 {feature}
               </li>
@@ -175,7 +168,7 @@ export const CellPhonePage = () => {
           <div className="flex flex-col gap-3">
             <p>Color: {selectedColor && colors[selectedColor].name}</p>
             <div className="flex gap-3">
-              {availableColors.map((color: string) => (
+              {availableColors.map(color => (
                 <button
                   key={color}
                   className={`w-8 h-8 rounded-full flex justify-center items-center ${
@@ -183,10 +176,7 @@ export const CellPhonePage = () => {
                   }`}
                   onClick={() => setSelectedColor(color)}
                 >
-                  <span
-                    className="w-[26px] h-[26px] rounded-full"
-                    style={{ backgroundColor: color }}
-                  />
+                  <span className="w-[26px] h-[26px] rounded-full" style={{ backgroundColor: color }} />
                 </button>
               ))}
             </div>
@@ -202,7 +192,7 @@ export const CellPhonePage = () => {
                   value={selectedStorage || ''}
                   onChange={e => setSelectedStorage(e.target.value)}
                 >
-                  {colors[selectedColor].storages.map((storage: string) => (
+                  {colors[selectedColor].storages.map(storage => (
                     <option value={storage} key={storage}>
                       {storage}
                     </option>
@@ -260,10 +250,7 @@ export const CellPhonePage = () => {
               <p className="text-xs font-semibold">Envío gratis</p>
             </div>
 
-            <Link
-              to="#"
-              className="flex flex-col gap-1 flex-1 items-center justify-center"
-            >
+            <Link to="#" className="flex flex-col gap-1 flex-1 items-center justify-center">
               <BsChatLeftText size={30} />
               <p className="flex flex-col items-center text-xs">
                 <span className="font-semibold">¿Necesitas ayuda?</span>
@@ -275,7 +262,8 @@ export const CellPhonePage = () => {
       </div>
 
       {/* Descripción */}
-      <ProductDescription content={product.description} />
+      <ProductDescription content={product.description as JSONContent | null} />
     </>
   );
 };
+

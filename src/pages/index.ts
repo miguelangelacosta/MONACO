@@ -1,4 +1,3 @@
-// src/pages/index.ts
 /* Páginas públicas */
 export { HomePage } from './HomePage';
 export { CellPhonesPage } from './CellPhonesPage';
@@ -15,5 +14,6 @@ export { OrderUserPage } from './OrderUserPage';
 export { DashboardProductsPage } from './dashboard/DashboardProductsPage';
 export { DashboardNewProductPage } from './dashboard/DashboardNewProductPage';
 export { DashboardProductSlugPage } from './dashboard/DashboardProductSlugPage';
+export { DashboardOrdersPage } from './dashboard/DashboardOrdersPage'; // ✅ Agregado
 
 

@@ -13,15 +13,14 @@ export const AboutPage = () => {
 
 			<div className='flex flex-col gap-4 tracking-tighter leading-7 text-sm font-medium text-slate-800'>
 				<p>
-					CelularesBaratos es una tienda en línea que se dedica a la
+					MONACO es una tienda en línea que se dedica a la
 					venta de celulares, fundada en 2021. Nuestro objetivo es
-					ofrecer a nuestros clientes la mejor calidad y precio en
-					celulares. Contamos con un equipo de profesionales que se
+					ofrecer a nuestros clientes la mejor calidad y precio . Contamos con un equipo de profesionales que se
 					encargan de seleccionar los mejores productos para ti.
 				</p>
 
 				<p>
-					En CelularesBaratos podrás encontrar una amplia variedad de
+					En MONACO podrás encontrar una amplia variedad de
 					celulares de las mejores marcas. Además, contamos con
 					promociones y descuentos exclusivos para que puedas comprar
 					tu celular al mejor precio.

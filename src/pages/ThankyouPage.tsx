@@ -34,8 +34,8 @@ export const ThankyouPage = () => {
 					className='text-4xl font-bold self-center tracking-tighter transition-all md:text-5xl'
 				>
 					<p>
-						Celulares
-						<span className='text-cyan-600'>Baratos</span>
+						MONA
+						<span className='text-cyan-600'>CO</span>
 					</p>
 				</Link>
 			</header>
@@ -53,14 +53,14 @@ export const ThankyouPage = () => {
 					<h3 className='font-medium'>Tu pedido está confirmado</h3>
 
 					<p className='text-sm'>
-						Gracias por realizar tu compra en Celularesbaratos. Para
+						Gracias por realizar tu compra MONACO. Para
 						realizar la transferencia te compartimos los siguientes
 						datos
 					</p>
 
 					<div className='space-y-0.5 text-sm'>
 						<p>BANCO PICHINCHA</p>
-						<p>Razón Social: CelularesBaratos</p>
+						<p>Razón Social: MONACO</p>
 						<p>RUC: 123456789000</p>
 						<p>Tipo de cuenta: Corriente</p>
 						<p>Número de cuenta: 1234567890</p>
@@ -68,7 +68,7 @@ export const ThankyouPage = () => {
 
 					<p className='text-sm'>
 						Una vez realizada la transferencia, comparte tu
-						comprobante a ventas@celularesbaratos.com para procesarla
+						comprobante a ventas@c.com para procesarla
 						y hacerte la entrega de tu dispositivo a domicilio.
 					</p>
 				</div>
@@ -130,7 +130,7 @@ export const ThankyouPage = () => {
 						<div className='flex flex-col text-sm'>
 							<p className='font-semibold'>Métodos de pago:</p>
 							<p>
-								Deposito bancario - {formatPrice(data.totalAmount)}
+								 - {formatPrice(data.totalAmount)}
 							</p>
 						</div>
 
@@ -160,7 +160,7 @@ export const ThankyouPage = () => {
 					</p>
 
 					<Link
-						to='/celulares'
+						to='/tienda'
 						className='text-white bg-black py-4 text-sm rounded-md px-5 tracking-tight font-semibold'
 					>
 						Seguir comprando

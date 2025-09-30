@@ -21,6 +21,7 @@ export const ClientLayout = () => {
       }
     });
 
+    // Cleanup seguro
     const subscription = authListener?.subscription;
     return () => {
       subscription?.unsubscribe?.();
@@ -34,13 +35,11 @@ export const ClientLayout = () => {
     }
   }, [role, isLoadingRole, pathname, navigate]);
 
-  // Mostrar loader mientras carga sesión o rol, o si no hay sesión
-  if (isLoadingSession || isLoadingRole || !session) return <Loader />;
+  // Mostrar loader mientras carga sesión o rol
+  if (isLoadingSession || isLoadingRole) return <Loader />;
 
   const handleLogout = async () => {
-    await signOut(); // cierra sesión
-    // Redirige al login inmediatamente
-    navigate('/login', { replace: true });
+    await signOut();
   };
 
   return (
@@ -54,8 +53,8 @@ export const ClientLayout = () => {
           Pedidos
         </NavLink>
 
-        {/* Dashboard solo para admin y si hay sesión */}
-        {role === 'admin' && session && (
+        {/* Dashboard solo para admin */}
+        {role === 'admin' && (
           <NavLink
             to="/dashboard/productos"
             className="flex items-center gap-1 hover:underline"

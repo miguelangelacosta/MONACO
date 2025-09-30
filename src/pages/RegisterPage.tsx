@@ -103,7 +103,7 @@ export const RegisterPage = () => {
 
 					<p className='text-sm text-stone-800'>
 						¿Ya tienes una cuenta?
-						<Link to='/registro' className='underline ml-2'>
+						<Link to='/loginpage' className='underline ml-2'>
 							Inicia sesión
 						</Link>
 					</p>

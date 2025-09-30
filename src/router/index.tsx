@@ -14,10 +14,18 @@ import {
   DashboardProductsPage,
   DashboardNewProductPage,
   DashboardProductSlugPage,
-  DashboardOrdersPage, // ✅ importar la página de órdenes
+  DashboardOrdersPage,
+  DashboardOrderPage,
 } from '../pages';
 import { ClientLayout } from '../layouts/ClientLayout';
 import { DashboardLayout } from '../layouts/DashboardLayout';
+
+// Maneja errores en el dashboard
+const DashboardError = () => (
+  <div className="flex items-center justify-center h-screen">
+    <h1 className="text-2xl font-bold">Oops! Algo salió mal en el dashboard 😅</h1>
+  </div>
+);
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +42,7 @@ export const router = createBrowserRouter([
         path: 'account',
         element: <ClientLayout />,
         children: [
-          { path: '', element: <Navigate to='/account/pedidos' /> },
+          { path: '', element: <Navigate to="/account/pedidos" /> },
           { path: 'pedidos', element: <OrdersUserPage /> },
           { path: 'pedidos/:id', element: <OrderUserPage /> },
         ],
@@ -46,12 +54,14 @@ export const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <DashboardLayout />,
+    errorElement: <DashboardError />, // captura errores del dashboard
     children: [
-      { index: true, element: <Navigate to='/dashboard/productos' /> },
+      { index: true, element: <Navigate to="/dashboard/productos" /> },
       { path: 'productos', element: <DashboardProductsPage /> },
       { path: 'productos/new', element: <DashboardNewProductPage /> },
       { path: 'productos/editar/:slug', element: <DashboardProductSlugPage /> },
-      { path: 'ordenes', element: <DashboardOrdersPage /> }, // ✅ nueva ruta para órdenes
+      { path: 'ordenes', element: <DashboardOrdersPage /> },
+      { path: 'ordenes/:id', element: <DashboardOrderPage /> },
     ],
   },
 ]);

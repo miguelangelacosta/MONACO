@@ -132,7 +132,7 @@ export const FormProduct = ({ titleForm }: Props) => {
         >
           <InputForm
             type="text"
-            placeholder="Ejemplo: iPhone 13 Pro Max"
+            placeholder="Ejemplo: Camiseta deportiva"
             label="nombre"
             name="name"
             register={register}
@@ -156,7 +156,7 @@ export const FormProduct = ({ titleForm }: Props) => {
             type="text"
             label="Marca"
             name="brand"
-            placeholder="Apple"
+            placeholder="ropa"
             register={register}
             errors={errors}
             required

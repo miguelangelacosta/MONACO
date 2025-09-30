@@ -1,12 +1,11 @@
 // src/components/home/Brands.tsx
 
 const brands = [
-  { image: '/image/brands/apple-logo.webp', alt: 'Apple' },
-  { image: '/image/brands/samsung-logo.webp', alt: 'Samsung' },
-  { image: '/image/brands/xiaomi-logo.webp', alt: 'Xiaomi' },
-  { image: '/image/brands/realme-logo.webp', alt: 'Realme' },
-  { image: '/image/brands/huawei-logo.png', alt: 'Huawei' },
-  { image: '/image/brands/honor-logo.png', alt: 'Honor' },
+  { image: '/image/brands/apple-logo.webp', alt: 'adidas' },
+  { image: '/image/brands/samsung-logo.webp', alt: 'nike' },
+  { image: '/image/brands/xiaomi-logo.webp', alt: 'rebook' },
+  { image: '/image/brands/realme-logo.webp', alt: 'puma' },
+
 ];
 
 export const Brands = () => {

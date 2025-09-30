@@ -21,8 +21,7 @@ export const FeatureGrid = () => {
 				<div className='space-y-1'>
 					<p className='font-semibold'>Devoluciones</p>
 					<p className='text-sm'>
-						Devuelve el equipo si no te satisface la compra dentro de
-						72 horas
+						garantia por defectos e fabrica no por daños de uso 
 					</p>
 				</div>
 			</div>

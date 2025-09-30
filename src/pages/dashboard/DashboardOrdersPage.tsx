@@ -26,7 +26,7 @@ export const DashboardOrdersPage = () => {
       <div className='flex justify-between items-center'>
         <h1 className='text-2xl font-bold'>Órdenes</h1>
         <Link
-          to='/dashboard/orders/new'
+          to='/dashboard/ordenes/new'
           className='bg-black text-white flex items-center py-1 px-3 rounded-md text-sm gap-1 font-semibold'
         >
           <IoAddCircleOutline />

@@ -19,10 +19,13 @@ export const signUp = async ({
 	phone,
 }: IAuthRegister) => {
 	try {
-		// 1. Crear o Registrar usuario
+		// 1. Crear o Registrar usuario con emailRedirectTo
 		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,
+			options: {
+				emailRedirectTo: 'https://comercemonaco.netlify.app/', // URL de redirección después de confirmar correo
+			},
 		});
 
 		if (error) {
@@ -36,11 +39,10 @@ export const signUp = async ({
 		}
 
 		// 2. Autenticar al usuario
-		const { error: signInError } =
-			await supabase.auth.signInWithPassword({
-				email,
-				password,
-			});
+		const { error: signInError } = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		});
 
 		if (signInError) {
 			console.log(signInError);

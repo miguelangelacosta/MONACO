@@ -1,4 +1,4 @@
-import type  { PreparedProducts } from '../../interfaces';
+import type { PreparedProducts } from '../../interfaces';
 import { CardProduct } from '../products/CardProduct';
 
 interface Props {
@@ -8,13 +8,13 @@ interface Props {
 
 export const ProductGrid = ({ title, products }: Props) => {
 	return (
-		<div className='my-32'>
-			<h2 className='text-3xl font-semibold text-center mb-8 md:text-4xl lg:text-5xl'>
+		<div className="my-32">
+			<h2 className="text-3xl font-semibold text-center mb-8 md:text-4xl lg:text-5xl">
 				{title}
 			</h2>
 
-			<div className='grid grid-cols-1 gap-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4'>
-				{products.map(product => (
+			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
+				{products.map((product) => (
 					<CardProduct
 						key={product.id}
 						name={product.name}

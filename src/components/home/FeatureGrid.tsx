@@ -2,51 +2,81 @@ import { BiWorld } from 'react-icons/bi';
 import { FaHammer } from 'react-icons/fa6';
 import { HiMiniReceiptRefund } from 'react-icons/hi2';
 import { MdLocalShipping } from 'react-icons/md';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const FeatureGrid = () => {
-	return (
-		<div className='grid grid-cols-2 gap-8 mt-6 mb-16 lg:grid-cols-4 lg:gap-5'>
-			<div className='flex items-center gap-6'>
-				<MdLocalShipping size={40} className='text-slate-600' />
+  const features = [
+    {
+      icon: <MdLocalShipping size={40} className='text-white' />,
+      title: 'Envío gratis',
+      description: 'En todos nuestros productos',
+      bg: 'bg-gradient-to-r from-yellow-400 to-orange-500',
+    },
+    {
+      icon: <HiMiniReceiptRefund size={40} className='text-white' />,
+      title: 'Devoluciones',
+      description: 'Garantía por defectos de fábrica, no por daños de uso',
+      bg: 'bg-gradient-to-r from-pink-500 to-purple-500',
+    },
+    {
+      icon: <FaHammer size={40} className='text-white' />,
+      title: 'Soporte 24/7',
+      description: 'Soporte técnico en cualquier momento',
+      bg: 'bg-gradient-to-r from-cyan-500 to-blue-500',
+    },
+    {
+      icon: <BiWorld size={40} className='text-white' />,
+      title: 'Garantía',
+      description: 'Garantía de 1 año en todos los equipos',
+      bg: 'bg-gradient-to-r from-green-400 to-teal-500',
+    },
+  ];
 
-				<div className='space-y-1'>
-					<p className='font-semibold'>Envío gratis</p>
-					<p className='text-sm'>En todos nuestros productos</p>
-				</div>
-			</div>
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2, // Móviles: 2 cards visibles
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024, // Menos de 1024px
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 3000, // Pantalla grande ≥1024px
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+    ],
+  };
 
-			<div className='flex items-center gap-6'>
-				<HiMiniReceiptRefund size={40} className='text-slate-600' />
-
-				<div className='space-y-1'>
-					<p className='font-semibold'>Devoluciones</p>
-					<p className='text-sm'>
-						garantia por defectos e fabrica no por daños de uso 
-					</p>
-				</div>
-			</div>
-
-			<div className='flex items-center gap-6'>
-				<FaHammer size={40} className='text-slate-600' />
-
-				<div className='space-y-1'>
-					<p className='font-semibold'>Soporte 24/7</p>
-					<p className='text-sm'>
-						Soporte técnico en cualquier momento
-					</p>
-				</div>
-			</div>
-
-			<div className='flex items-center gap-6'>
-				<BiWorld size={40} className='text-slate-600' />
-
-				<div className='space-y-1'>
-					<p className='font-semibold'>Garantía</p>
-					<p className='text-sm'>
-						Garantía de 1 año en todos los equipos
-					</p>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div className="my-16 px-4 sm:px-6 lg:px-12">
+      <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
+        Beneficios de comprar con nosotros
+      </h2>
+      <Slider {...settings} className="gap-6">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className={`flex flex-col items-center justify-center p-6 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 ${feature.bg}`}
+          >
+            {feature.icon}
+            <p className="font-semibold text-white text-center mt-4 text-lg">
+              {feature.title}
+            </p>
+            <p className="text-sm text-white text-center mt-1">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
 };

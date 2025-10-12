@@ -1,6 +1,7 @@
 import { Brands } from '../components/home/Brands';
 import { FeatureGrid } from '../components/home/FeatureGrid';
-import { ProductGrid } from '../components/home/ProductGrid';
+//import { ProductGrid } from '../components/home/ProductGrid';
+import { ProductSlider } from '../components/products/ProductSlider';
 import { ProductGridSkeleton } from '../components/skeletons/ProductGridSkeleton';
 import { prepareProducts } from '../helpers';
 import { useHomeProducts } from '../hooks';
@@ -12,25 +13,25 @@ export const HomePage = () => {
   const preparedPopularProducts = prepareProducts(popularProducts);
 
   return (
-    <div>
+    <div className="space-y-16">
       {/* Grid de características */}
       <FeatureGrid />
 
-      {/* Productos recientes */}
+      {/* Productos recientes en grid */}
       {isLoading ? (
         <ProductGridSkeleton numberOfProducts={4} />
       ) : (
-        <ProductGrid
+        <ProductSlider
           title="Nuevos Productos"
           products={preparedRecentProducts}
         />
       )}
 
-      {/* Productos destacados */}
+      {/* Productos destacados en slider */}
       {isLoading ? (
         <ProductGridSkeleton numberOfProducts={4} />
       ) : (
-        <ProductGrid
+        <ProductSlider
           title="Productos Destacados"
           products={preparedPopularProducts}
         />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiShoppingCart } from "react-icons/fi"; // FiPlus eliminado
+import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { VariantProduct } from "../../interfaces";
 import { formatPrice } from "../../helpers";
@@ -58,12 +58,12 @@ export const CardProduct = ({
 
   return (
     <div className="flex flex-col bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200">
-      {/* Imagen */}
       <Link
         to={`/celulares/${slug}`}
         className="relative flex flex-col items-center justify-center overflow-hidden"
       >
-        <div className="relative h-[350px] w-full bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
+        <div className="relative w-full bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center transition-transform duration-500 group-hover:scale-105
+                        h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96">
           <img src={img} alt={name} className="object-contain h-full w-full" />
           {stock === 0 && (
             <div className="absolute top-3 left-3">
@@ -72,29 +72,26 @@ export const CardProduct = ({
           )}
         </div>
 
-        {/* Botón flotante */}
         <button
           onClick={handleAddClick}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full shadow-xl flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:scale-105"
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 sm:px-6 py-2 rounded-full shadow-xl flex items-center gap-2 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:scale-105"
         >
           <FiShoppingCart />
           Añadir
         </button>
       </Link>
 
-      {/* Información */}
-      <div className="flex flex-col items-center text-center px-4 py-3 gap-2">
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">
+      <div className="flex flex-col items-center text-center px-3 sm:px-4 py-2 sm:py-3 gap-1 sm:gap-2">
+        <h3 className="text-sm sm:text-lg font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">
           {name}
         </h3>
-        <p className="text-xl font-bold text-gray-800">{formatPrice(price)}</p>
+        <p className="text-base sm:text-xl font-bold text-gray-800">{formatPrice(price)}</p>
 
-        {/* Colores */}
         <div className="flex gap-2 mt-2">
           {colors.map((color) => (
             <span
               key={color.color}
-              className={`w-6 h-6 rounded-full cursor-pointer border-2 transition-transform ${
+              className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full cursor-pointer border-2 transition-transform ${
                 activeColor.color === color.color
                   ? "border-orange-500 scale-110"
                   : "border-gray-300"

@@ -1,37 +1,36 @@
-import React from "react";
-import { BiWorld } from "react-icons/bi";
-import { FaHammer } from "react-icons/fa6";
-import { HiMiniReceiptRefund } from "react-icons/hi2";
-import { MdLocalShipping } from "react-icons/md";
-import Slider from "react-slick";
+import { BiWorld } from 'react-icons/bi';
+import { FaHammer } from 'react-icons/fa6';
+import { HiMiniReceiptRefund } from 'react-icons/hi2';
+import { MdLocalShipping } from 'react-icons/md';
+import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const FeatureGrid = () => {
   const features = [
     {
-      icon: <MdLocalShipping size={40} className="text-white" />,
-      title: "Envío gratis",
-      description: "En todos nuestros productos",
-      bg: "bg-gradient-to-r from-yellow-400 to-orange-500",
+      icon: <MdLocalShipping size={40} className='text-white' />,
+      title: 'Envío seguros',
+      description: 'En todos nuestros productos',
+      bg: 'bg-gradient-to-r from-yellow-400 to-orange-500',
     },
     {
-      icon: <HiMiniReceiptRefund size={40} className="text-white" />,
-      title: "Devoluciones",
-      description: "Garantía por defectos de fábrica, no por daños de uso",
-      bg: "bg-gradient-to-r from-pink-500 to-purple-500",
+      icon: <HiMiniReceiptRefund size={40} className='text-white' />,
+      title: 'Devoluciones',
+      description: 'Garantía por defectos de fábrica, no por daños de uso',
+      bg: 'bg-gradient-to-r from-pink-500 to-purple-500',
     },
     {
-      icon: <FaHammer size={40} className="text-white" />,
-      title: "Soporte 24/7",
-      description: "Soporte técnico en cualquier momento",
-      bg: "bg-gradient-to-r from-cyan-500 to-blue-500",
+      icon: <FaHammer size={40} className='text-white' />,
+      title: 'Soporte activo',
+      description: 'Soporte técnico en cualquier momento',
+      bg: 'bg-gradient-to-r from-cyan-500 to-blue-500',
     },
     {
-      icon: <BiWorld size={40} className="text-white" />,
-      title: "Garantía",
-      description: "Garantía de 1 año en todos los equipos",
-      bg: "bg-gradient-to-r from-green-400 to-teal-500",
+      icon: <BiWorld size={40} className='text-white' />,
+      title: 'Garantía',
+      description: 'Garantía de 1 mes por defecto de fabrica',
+      bg: 'bg-gradient-to-r from-green-400 to-teal-500',
     },
   ];
 
@@ -39,18 +38,17 @@ export const FeatureGrid = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 2, // default para móvil
+    slidesToShow: 2, // Móviles: 2 cards visibles
     slidesToScroll: 1,
-    arrows: false,
     responsive: [
       {
-        breakpoint: 1024, // menor a 1024px → 2 cards (ya default)
+        breakpoint: 1024, // Menos de 1024px
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 3000, // mayor a 1024px → 4 cards
+        breakpoint: 3000, // Pantalla grande ≥1024px
         settings: {
           slidesToShow: 4,
         },
@@ -63,21 +61,19 @@ export const FeatureGrid = () => {
       <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
         Beneficios de comprar con nosotros
       </h2>
-
-      <Slider {...settings}>
+      <Slider {...settings} className="gap-6">
         {features.map((feature, index) => (
-          <div key={index} className="px-2">
-            <div
-              className={`flex flex-col items-center justify-center p-6 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 ${feature.bg}`}
-            >
-              {feature.icon}
-              <p className="font-semibold text-white text-center mt-4 text-lg">
-                {feature.title}
-              </p>
-              <p className="text-sm text-white text-center mt-1">
-                {feature.description}
-              </p>
-            </div>
+          <div
+            key={index}
+            className={`flex flex-col items-center justify-center p-6 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 ${feature.bg}`}
+          >
+            {feature.icon}
+            <p className="font-semibold text-white text-center mt-4 text-lg">
+              {feature.title}
+            </p>
+            <p className="text-sm text-white text-center mt-1">
+              {feature.description}
+            </p>
           </div>
         ))}
       </Slider>

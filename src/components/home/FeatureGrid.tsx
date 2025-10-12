@@ -10,7 +10,7 @@ export const FeatureGrid = () => {
   const features = [
     {
       icon: <MdLocalShipping size={40} className='text-white' />,
-      title: 'Envío gratis',
+      title: 'Envío seguros',
       description: 'En todos nuestros productos',
       bg: 'bg-gradient-to-r from-yellow-400 to-orange-500',
     },
@@ -22,14 +22,14 @@ export const FeatureGrid = () => {
     },
     {
       icon: <FaHammer size={40} className='text-white' />,
-      title: 'Soporte 24/7',
+      title: 'Soporte activo',
       description: 'Soporte técnico en cualquier momento',
       bg: 'bg-gradient-to-r from-cyan-500 to-blue-500',
     },
     {
       icon: <BiWorld size={40} className='text-white' />,
       title: 'Garantía',
-      description: 'Garantía de 1 año en todos los equipos',
+      description: 'Garantía de 1 mes por defecto de fabrica',
       bg: 'bg-gradient-to-r from-green-400 to-teal-500',
     },
   ];

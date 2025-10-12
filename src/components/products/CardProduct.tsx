@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiPlus, FiShoppingCart } from "react-icons/fi";
+import { FiShoppingCart } from "react-icons/fi"; // FiPlus eliminado
 import { Link } from "react-router-dom";
 import { VariantProduct } from "../../interfaces";
 import { formatPrice } from "../../helpers";

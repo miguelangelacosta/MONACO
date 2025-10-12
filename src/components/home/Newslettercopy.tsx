@@ -23,8 +23,10 @@ export const NewsletterCopy = () => {
     speed: 400,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: true,          // ✅ Activar desplazamiento automático
-    autoplaySpeed: 3000,     // ✅ Cambia de slide cada 3 segundos
+    autoplay: true,
+    autoplaySpeed: 3000,
+    swipe: true,
+    touchMove: true,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 3 } },
       { breakpoint: 768, settings: { slidesToShow: 2 } },
@@ -55,18 +57,18 @@ export const NewsletterCopy = () => {
       </div>
 
       {/* Carrusel de ofertas */}
-      <Slider {...settings} className="gap-2">
+      <Slider {...settings}>
         {offers.map((offer, idx) => (
           <a
             key={idx}
             href={offer.link}
-            className="block rounded-lg overflow-hidden shadow-sm transform transition-all duration-200 hover:scale-105"
+            className="block px-0.5 rounded-lg overflow-hidden shadow-sm transform transition-all duration-200 hover:scale-105"
           >
-            <div className="relative w-full h-20 sm:h-24 md:h-28 bg-gray-200">
+            <div className="relative w-full min-h-[120px] sm:min-h-[140px] md:min-h-[160px] bg-gray-200 rounded-lg">
               <img
                 src={offer.image}
                 alt={offer.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-lg"
               />
               <div className="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white px-1 rounded text-[9px] sm:text-xs md:text-sm">
                 {offer.title}

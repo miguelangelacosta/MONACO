@@ -10,24 +10,27 @@ interface Props {
 }
 
 export const ProductGrid = ({ title, products }: Props) => {
-  // Configuración para slider
-  const sliderSettings = {
+  const settings = {
     dots: false,
-    infinite: true,
-    speed: 400,
-    slidesToShow: 4,       // Desktop por defecto
+    infinite: true,          // para que el slider sea infinito
+    speed: 500,
+    slidesToShow: 4,         // en desktop se ven 4 tarjetas
     slidesToScroll: 1,
-    autoplay: true,        // ✅ Autoplay activado
-    autoplaySpeed: 3000,   // ⏱ 3 segundos por slide
+    autoplay: true,          // autoplay activado
+    autoplaySpeed: 3000,     // cada 3 segundos
     responsive: [
       {
-        breakpoint: 1024,  // Tablets
-        settings: { slidesToShow: 2 }
+        breakpoint: 1024,
+        settings: { slidesToShow: 3 }  // tablet grande
       },
       {
-        breakpoint: 640,   // Móviles
-        settings: { slidesToShow: 1 }
+        breakpoint: 768,
+        settings: { slidesToShow: 2 }  // tablet / móvil grande
       },
+      {
+        breakpoint: 480,
+        settings: { slidesToShow: 1 }  // móvil pequeño
+      }
     ],
   };
 
@@ -37,23 +40,20 @@ export const ProductGrid = ({ title, products }: Props) => {
         {title}
       </h2>
 
-      {/* Slider responsive */}
-      <div className="px-2">
-        <Slider {...sliderSettings}>
-          {products.map((product) => (
-            <div key={product.id} className="px-2">
-              <CardProduct
-                name={product.name}
-                price={product.price}
-                colors={product.colors}
-                img={product.images[0]}
-                slug={product.slug}
-                variants={product.variants}
-              />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      <Slider {...settings} className="px-2 sm:px-4 gap-4">
+        {products.map((product) => (
+          <div key={product.id} className="px-2">
+            <CardProduct
+              name={product.name}
+              price={product.price}
+              colors={product.colors}
+              img={product.images[0]}
+              slug={product.slug}
+              variants={product.variants}
+            />
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };

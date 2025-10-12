@@ -2,9 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate } from 'react-router-dom';
 import { useRegister, useUser } from '../hooks';
+import { LuLoader } from 'react-icons/lu';
 import { Loader } from '../components/shared/Loader';
-import type { UserRegisterFormValues } from '../lib/validators';
-import { userRegisterSchema } from '../lib/validators';
+import {
+	UserRegisterFormValues,
+	userRegisterSchema,
+} from '../lib/validators';
 
 export const RegisterPage = () => {
 	const {
@@ -26,6 +29,7 @@ export const RegisterPage = () => {
 
 	const onRegister = handleSubmit(data => {
 		const { email, password, fullName, phone } = data;
+
 		mutate({ email, password, fullName, phone });
 	});
 
@@ -43,8 +47,7 @@ export const RegisterPage = () => {
 
 			{isPending ? (
 				<div className='w-full h-full flex justify-center mt-20'>
-					{/* Spinner CSS seguro */}
-					<div className='w-16 h-16 border-4 border-t-black border-gray-300 rounded-full animate-spin'></div>
+					<LuLoader className='animate-spin' size={60} />
 				</div>
 			) : (
 				<>
@@ -103,7 +106,7 @@ export const RegisterPage = () => {
 
 					<p className='text-sm text-stone-800'>
 						¿Ya tienes una cuenta?
-						<Link to='/loginpage' className='underline ml-2'>
+						<Link to='/registro' className='underline ml-2'>
 							Inicia sesión
 						</Link>
 					</p>

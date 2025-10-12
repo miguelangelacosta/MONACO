@@ -19,10 +19,13 @@ export const signUp = async ({
 	phone,
 }: IAuthRegister) => {
 	try {
-		// 1. Crear o Registrar usuario
+		// 1. Crear o Registrar usuario con emailRedirectTo
 		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,
+			options: {
+				emailRedirectTo: 'https://comercemonaco.netlify.app/confirmacion', // URL de redirección
+			},
 		});
 
 		if (error) {
@@ -35,16 +38,19 @@ export const signUp = async ({
 			throw new Error('Error al obtener el id del usuario');
 		}
 
-		// 2. Autenticar al usuario
-		const { error: signInError } =
-			await supabase.auth.signInWithPassword({
+		// 2. Insertar los datos del usuario en la tabla customers (Clientes)
+		const { error: customerError } = await supabase
+			.from('customers')
+			.insert({
+				user_id: userId,
+				full_name: fullName,
+				phone,
 				email,
-				password,
 			});
 
-		if (signInError) {
-			console.log(signInError);
-			throw new Error('Email o contraseña incorrectos');
+		if (customerError) {
+			console.log(customerError);
+			throw new Error('Error al registrar los datos del usuario');
 		}
 
 		// 3. Insertar el rol por defecto - CUSTOMER (Cliente)
@@ -60,22 +66,12 @@ export const signUp = async ({
 			throw new Error('Error al registrar el rol del usuario');
 		}
 
-		// 4. Insertar los datos del usuario en la tabla customers (Clientes)
-		const { error: customerError } = await supabase
-			.from('customers')
-			.insert({
-				user_id: userId,
-				full_name: fullName,
-				phone,
-				email,
-			});
-
-		if (customerError) {
-			console.log(customerError);
-			throw new Error('Error al registrar los datos del usuario');
-		}
-
-		return data;
+		// 4. Retornar mensaje de éxito
+		return {
+			message:
+				'Registro exitoso. Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.',
+			user: data.user,
+		};
 	} catch (error) {
 		console.log(error);
 		throw new Error('Error al registrar el usuario');

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiShoppingCart } from "react-icons/fi"; // FiPlus eliminado
+import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { VariantProduct } from "../../interfaces";
 import { formatPrice } from "../../helpers";
@@ -16,14 +16,7 @@ interface Props {
   variants: VariantProduct[];
 }
 
-export const CardProduct = ({
-  img,
-  name,
-  price,
-  slug,
-  colors,
-  variants,
-}: Props) => {
+export const CardProduct = ({ img, name, price, slug, colors, variants }: Props) => {
   const [activeColor, setActiveColor] = useState(colors[0]);
   const addItem = useCartStore((state) => state.addItem);
 
@@ -46,25 +39,21 @@ export const CardProduct = ({
         price: selectedVariant.price,
         quantity: 1,
       });
-      toast.success("Producto añadido al carrito", {
-        position: "bottom-right",
-      });
+      toast.success("Producto añadido al carrito", { position: "bottom-right" });
     } else {
-      toast.error("Producto agotado", {
-        position: "bottom-right",
-      });
+      toast.error("Producto agotado", { position: "bottom-right" });
     }
   };
 
   return (
-    <div className="flex flex-col bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200">
+    <div className="flex flex-col bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200 w-full max-w-xs mx-auto">
       {/* Imagen */}
       <Link
         to={`/celulares/${slug}`}
         className="relative flex flex-col items-center justify-center overflow-hidden"
       >
-        <div className="relative h-[350px] w-full bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
-          <img src={img} alt={name} className="object-contain h-full w-full" />
+        <div className="relative w-full aspect-[3/4] bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
+          <img src={img} alt={name} className="object-contain w-full h-full" />
           {stock === 0 && (
             <div className="absolute top-3 left-3">
               <Tag contentTag="agotado" />

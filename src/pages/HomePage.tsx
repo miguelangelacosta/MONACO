@@ -6,35 +6,38 @@ import { prepareProducts } from '../helpers';
 import { useHomeProducts } from '../hooks';
 
 export const HomePage = () => {
-	const { recentProducts, popularProducts, isLoading } =
-		useHomeProducts();
+  const { recentProducts, popularProducts, isLoading } = useHomeProducts();
 
-	const preparedRecentProducts = prepareProducts(recentProducts);
-	const preparedPopularProducts = prepareProducts(popularProducts);
+  const preparedRecentProducts = prepareProducts(recentProducts);
+  const preparedPopularProducts = prepareProducts(popularProducts);
 
-	return (
-		<div>
-			<FeatureGrid />
+  return (
+    <div>
+      {/* Grid de características */}
+      <FeatureGrid />
 
-			{isLoading ? (
-				<ProductGridSkeleton numberOfProducts={4} />
-			) : (
-				<ProductGrid
-					title='Nuevos Productos'
-					products={preparedRecentProducts}
-				/>
-			)}
+      {/* Productos recientes */}
+      {isLoading ? (
+        <ProductGridSkeleton numberOfProducts={4} />
+      ) : (
+        <ProductGrid
+          title="Nuevos Productos"
+          products={preparedRecentProducts}
+        />
+      )}
 
-			{isLoading ? (
-				<ProductGridSkeleton numberOfProducts={4} />
-			) : (
-				<ProductGrid
-					title='Productos Destacados'
-					products={preparedPopularProducts}
-				/>
-			)}
+      {/* Productos destacados */}
+      {isLoading ? (
+        <ProductGridSkeleton numberOfProducts={4} />
+      ) : (
+        <ProductGrid
+          title="Productos Destacados"
+          products={preparedPopularProducts}
+        />
+      )}
 
-			<Brands />
-		</div>
-	);
+      {/* Marcas */}
+      <Brands />
+    </div>
+  );
 };

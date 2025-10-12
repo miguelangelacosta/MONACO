@@ -2,36 +2,36 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '../components/shared/Navbar';
 import { Footer } from '../components/shared/Footer';
 import { Banner } from '../components/home/Banner';
-import { Newsletter } from '../components/home/Newsletter';
+import { NewsletterCopy } from '../components/home/Newslettercopy';
 import { Sheet } from '../components/shared/Sheet';
 import { useGlobalStore } from '../store/global.store';
 import { NavbarMobile } from '../components/shared/NavbarMobile';
 
 export const RootLayout = () => {
-	const { pathname } = useLocation();
+  const { pathname } = useLocation();
 
-	const isSheetOpen = useGlobalStore(state => state.isSheetOpen);
-	const activeNavMobile = useGlobalStore(
-		state => state.activeNavMobile
-	);
+  const isSheetOpen = useGlobalStore((state) => state.isSheetOpen);
+  const activeNavMobile = useGlobalStore((state) => state.activeNavMobile);
 
-	return (
-		<div className='h-screen flex flex-col font-montserrat'>
-			<Navbar />
+  return (
+    <div className='h-screen flex flex-col font-montserrat'>
+      <Navbar />
 
-			{pathname === '/' && <Banner />}
+      {/* NewsletterCopy visible solo en la página principal */}
+      {pathname === '/' && <NewsletterCopy />}
 
-			<main className='container my-8 flex-1'>
-				<Outlet />
-			</main>
+      {/* Banner principal */}
+      {pathname === '/' && <Banner />}
 
-			{pathname === '/' && <Newsletter />}
+      <main className='container my-8 flex-1'>
+        <Outlet />
+      </main>
 
-			{isSheetOpen && <Sheet />}
+      {isSheetOpen && <Sheet />}
 
-			{activeNavMobile && <NavbarMobile />}
+      {activeNavMobile && <NavbarMobile />}
 
-			<Footer />
-		</div>
-	);
+      <Footer />
+    </div>
+  );
 };

@@ -38,26 +38,37 @@ export const FeatureGrid = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 2, // Móviles: 2 cards visibles
+    slidesToShow: 1,
     slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: '10px',
     responsive: [
       {
-        breakpoint: 1024, // Menos de 1024px
+        breakpoint: 768, // móvil
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
+          centerPadding: '10px',
         },
       },
       {
-        breakpoint: 3000, // Pantalla grande ≥1024px
+        breakpoint: 1024, // tablet
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 2,
+          centerPadding: '20px',
+        },
+      },
+      {
+        breakpoint: 3000, // desktop grande
+        settings: {
+          slidesToShow: 3,
+          centerPadding: '40px',
         },
       },
     ],
   };
 
   return (
-    <div className="my-16 px-4 sm:px-6 lg:px-12">
+    <div className="my-16 px-2 sm:px-6 lg:px-12">
       <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
         Beneficios de comprar con nosotros
       </h2>
@@ -65,10 +76,16 @@ export const FeatureGrid = () => {
         {features.map((feature, index) => (
           <div
             key={index}
-            className={`flex flex-col items-center justify-center p-6 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 ${feature.bg}`}
+            className={`flex flex-col items-center justify-center rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 ${feature.bg}`}
+            style={{
+              padding: '0.5rem 2rem', // vertical reducido
+              height: '50px',        // altura fija
+              width: '110%',            // un poco más ancho
+              margin: '0 auto',
+            }}
           >
             {feature.icon}
-            <p className="font-semibold text-white text-center mt-4 text-lg">
+            <p className="font-semibold text-white text-center mt-2 text-lg">
               {feature.title}
             </p>
             <p className="text-sm text-white text-center mt-1">

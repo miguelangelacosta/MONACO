@@ -9,28 +9,27 @@ import { NavbarMobile } from '../components/shared/NavbarMobile';
 
 export const RootLayout = () => {
   const { pathname } = useLocation();
-
   const isSheetOpen = useGlobalStore((state) => state.isSheetOpen);
   const activeNavMobile = useGlobalStore((state) => state.activeNavMobile);
 
   return (
-    <div className='h-screen flex flex-col font-montserrat'>
+    <div className='min-h-screen flex flex-col font-montserrat'>
       <Navbar />
 
-      {/* NewsletterCopy visible solo en la página principal */}
-      {pathname === '/' && <NewsletterCopy />}
+      {/* Newsletter y Banner solo en página principal */}
+      {pathname === '/' && (
+        <>
+          <NewsletterCopy />
+          <Banner />
+        </>
+      )}
 
-      {/* Banner principal */}
-      {pathname === '/' && <Banner />}
-
-      <main className='container my-8 flex-1'>
+      <main className='container flex-1 my-8 px-4 sm:px-6 lg:px-8'>
         <Outlet />
       </main>
 
       {isSheetOpen && <Sheet />}
-
       {activeNavMobile && <NavbarMobile />}
-
       <Footer />
     </div>
   );

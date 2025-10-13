@@ -57,36 +57,50 @@ export const CardProduct = ({
   };
 
   return (
-    <div className="flex flex-col bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200">
+    <div
+      className="flex flex-col bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200
+                 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[340px] h-[340px] sm:h-[360px]"
+    >
       <Link
         to={`/celulares/${slug}`}
         className="relative flex flex-col items-center justify-center overflow-hidden"
       >
-        <div className="relative w-full bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center transition-transform duration-500 group-hover:scale-105
-                        h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96">
+        {/* Imagen */}
+        <div
+          className="relative w-full bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center
+                        transition-transform duration-500 group-hover:scale-105
+                        h-[180px] sm:h-[200px] md:h-[220px]"
+        >
           <img src={img} alt={name} className="object-contain h-full w-full" />
           {stock === 0 && (
             <div className="absolute top-3 left-3">
               <Tag contentTag="agotado" />
             </div>
           )}
-        </div>
 
-        <button
-          onClick={handleAddClick}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 sm:px-6 py-2 rounded-full shadow-xl flex items-center gap-2 text-sm sm:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:scale-105"
-        >
-          <FiShoppingCart />
-          Añadir
-        </button>
+          {/* Botón animado */}
+          <button
+            onClick={handleAddClick}
+            className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 
+                       text-white px-4 sm:px-5 py-2 rounded-full shadow-xl flex items-center gap-2 text-sm sm:text-base 
+                       opacity-0 group-hover:opacity-100 group-hover:bottom-4 transition-all duration-500 ease-out hover:scale-105"
+          >
+            <FiShoppingCart />
+            Añadir
+          </button>
+        </div>
       </Link>
 
-      <div className="flex flex-col items-center text-center px-3 sm:px-4 py-2 sm:py-3 gap-1 sm:gap-2">
-        <h3 className="text-sm sm:text-lg font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">
+      {/* Info */}
+      <div className="flex flex-col items-center text-center px-3 sm:px-4 py-3 gap-1 sm:gap-2 flex-1">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">
           {name}
         </h3>
-        <p className="text-base sm:text-xl font-bold text-gray-800">{formatPrice(price)}</p>
+        <p className="text-base sm:text-xl font-bold text-gray-800">
+          {formatPrice(price)}
+        </p>
 
+        {/* Colores */}
         <div className="flex gap-2 mt-2">
           {colors.map((color) => (
             <span
@@ -105,3 +119,5 @@ export const CardProduct = ({
     </div>
   );
 };
+
+

@@ -1,9 +1,9 @@
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardProduct } from "../products/CardProduct";
 import type { PreparedProducts } from "../../interfaces";
+import { useRef } from "react";
 
 interface Props {
   title: string;
@@ -11,22 +11,44 @@ interface Props {
 }
 
 export const ProductSlider = ({ title, products }: Props) => {
+  const sliderRef = useRef<Slider | null>(null);
+
   const settings = {
     dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2, // móvil
+    infinite: true,
+    speed: 800, // ⚡ transiciones más rápidas y suaves
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
+    autoplay: true,
+    autoplaySpeed: 2500, // 🕒 velocidad más natural
+    cssEase: "ease-in-out", // 🎢 animación más agradable
+    pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1024, // pantallas grandes
+        breakpoint: 768,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
         },
       },
     ],
+  };
+
+  const handleHover = (index: number) => {
+    // 🧠 centra el slide cuando se pasa el cursor
+    sliderRef.current?.slickGoTo(index);
   };
 
   return (
@@ -35,9 +57,17 @@ export const ProductSlider = ({ title, products }: Props) => {
         {title}
       </h2>
 
-      <Slider {...settings} className="gap-4">
-        {products.map((product) => (
-          <div key={product.id} className="px-2">
+      <Slider
+        ref={sliderRef}
+        {...settings}
+        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-3"
+      >
+        {products.slice(0, 12).map((product, index) => (
+          <div
+            key={product.id}
+            className="flex justify-center transition-transform duration-300 hover:scale-105 cursor-pointer"
+            onMouseEnter={() => handleHover(index)}
+          >
             <CardProduct
               name={product.name}
               price={product.price}

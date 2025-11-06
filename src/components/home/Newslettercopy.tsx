@@ -11,7 +11,6 @@ interface Product {
   name: string;
   images: string[];
   slug?: string;
-  description?: string | { type: string; content: string | string[] };
 }
 
 export const NewsletterCopy = () => {
@@ -25,7 +24,7 @@ export const NewsletterCopy = () => {
       try {
         const { data, error } = await supabase
           .from("products")
-          .select("id, name, images, slug, description")
+          .select("id, name, images, slug")
           .order("created_at", { ascending: false })
           .limit(8);
 
@@ -75,16 +74,6 @@ export const NewsletterCopy = () => {
     arrows: true,
   };
 
-  const renderDescription = (desc?: Product["description"]) => {
-    if (!desc) return "Sin descripción disponible.";
-    if (typeof desc === "string") return desc;
-    if (typeof desc === "object") {
-      if (Array.isArray(desc.content)) return desc.content.join(" ");
-      return desc.content || "Sin descripción disponible.";
-    }
-    return "Sin descripción disponible.";
-  };
-
   return (
     <div className="flex flex-col gap-3 my-4 px-2 sm:px-4">
       {/* Barra promocional */}
@@ -94,7 +83,7 @@ export const NewsletterCopy = () => {
             🔥 ¡Oferta Especial del Día!
           </h3>
           <p className="text-xs sm:text-sm md:text-base mt-0.5">
-            Descubre nuestros productos más populares con descuentos exclusivos.
+            Descubre nuestros productos más populares.
           </p>
         </div>
         <button
@@ -143,7 +132,7 @@ export const NewsletterCopy = () => {
       >
         {selectedProduct && (
           <div className="flex flex-col">
-            {/* Carrusel de imágenes del producto */}
+            {/* Carrusel de imágenes */}
             {selectedProduct.images && selectedProduct.images.length > 0 && (
               <Slider {...modalSliderSettings}>
                 {selectedProduct.images.map((img, idx) => (
@@ -157,11 +146,10 @@ export const NewsletterCopy = () => {
               </Slider>
             )}
             <div className="p-4">
-              <h2 className="text-lg sm:text-xl font-bold">{selectedProduct.name}</h2>
-              <p className="text-sm sm:text-base mt-2">
-                {renderDescription(selectedProduct.description)}
-              </p>
-              <div className="mt-4 flex justify-end">
+              <h2 className="text-lg sm:text-xl font-bold text-center">
+                {selectedProduct.name}
+              </h2>
+              <div className="mt-4 flex justify-center">
                 <Link
                   to={`/celulares/${selectedProduct.slug || selectedProduct.id}`}
                   className="bg-yellow-400 text-gray-900 font-semibold px-4 py-2 rounded-xl shadow-md hover:bg-yellow-500 transition-colors duration-200"

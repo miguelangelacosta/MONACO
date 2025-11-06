@@ -194,7 +194,7 @@ export const CellPhonePage = () => {
 
           {/* Almacenamiento */}
           <div className="flex flex-col gap-3">
-            <p className="text-xs font-medium">Almacenamiento disponible</p>
+           <p className="text-xs font-medium">Datos para transferencia</p>
             {selectedColor && (
               <div className="flex gap-3">
                 <select
@@ -257,19 +257,22 @@ export const CellPhonePage = () => {
           <div className="flex pt-2">
             <div className="flex flex-col gap-1 flex-1 items-center">
               <CiDeliveryTruck size={35} />
-              <p className="text-xs font-semibold">Envío gratis</p>
+              <p className="text-xs font-semibold">Envío a domicilio</p>
             </div>
 
-            <Link
-              to="#"
-              className="flex flex-col gap-1 flex-1 items-center justify-center"
-            >
-              <BsChatLeftText size={30} />
-              <p className="flex flex-col items-center text-xs">
-                <span className="font-semibold">¿Necesitas ayuda?</span>
-                Contáctanos aquí
-              </p>
-            </Link>
+           <Link
+  to="https://wa.me/573175533775"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex flex-col gap-1 flex-1 items-center justify-center"
+>
+  <BsChatLeftText size={30} className="text-green-500" />
+  <p className="flex flex-col items-center text-xs text-gray-700">
+    <span className="font-semibold">¿Necesitas ayuda?</span>
+    Contáctanos aquí
+  </p>
+</Link>
+
           </div>
         </div>
       </div>

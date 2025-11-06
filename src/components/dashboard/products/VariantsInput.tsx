@@ -123,7 +123,7 @@ export const VariantsInput = ({
 
 							<input
 								type='text'
-								placeholder='64 GB'
+								placeholder='pp'
 								{...register(`variants.${index}.storage`)}
 								className='border rounded-md px-3 py-1.5 text-xs font-semibold placeholder:font-normal focus:outline-none appearance-none'
 							/>

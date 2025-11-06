@@ -147,7 +147,7 @@ export const FormProduct = ({ titleForm }: Props) => {
             type="text"
             label="Slug"
             name="slug"
-            placeholder="iphone-13-pro-max"
+            placeholder="dato"
             register={register}
             errors={errors}
           />

@@ -19,8 +19,9 @@ export const RootLayout = () => {
       {/* Newsletter y Banner solo en página principal */}
       {pathname === '/' && (
         <>
+         <Banner />
           <NewsletterCopy />
-          <Banner />
+         
         </>
       )}
 

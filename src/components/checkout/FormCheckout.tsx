@@ -111,7 +111,7 @@ export const FormCheckout = () => {
 
 					<div className='flex justify-between items-center text-sm border border-slate-600 bg-stone-100 py-4 rounded-md px-6'>
 						<span className='font-normal'>Standard</span>
-						<span className='font-semibold'>Gratis</span>
+						<span className='font-semibold'>domicilio</span>
 					</div>
 				</div>
 
@@ -121,16 +121,24 @@ export const FormCheckout = () => {
 					</div>
 
 					<div className='bg-stone-100 text-[13px] p-5 space-y-0.5 border border-gray-200 rounded-es-md rounded-ee-md'>
-						<p>Compra a traves de transferencia bancaria</p>
-						<p>BANCO PICHINCHA</p>
-						<p>Razón Social: CelularesBaratos</p>
-						<p>RUC: 123456789000</p>
-						<p>Tipo de cuenta: Corriente</p>
-						<p>Número de cuenta: 1234567890</p>
-						<p>
-							La información será compartida nuevamente una vez que se
-							haya finalizado la compra
-						</p>
+						   <p>
+      <strong>Titular:</strong> Monaco Commerce
+    </p>
+    <p>
+      <strong>Nequi / Celular:</strong> 3175533775
+    </p>
+    <p>
+      <strong>Banco:</strong> Bancolombia
+    </p>
+    <p>
+      <strong>Tipo de cuenta:</strong> Ahorros
+    </p>
+    <p>
+      <strong>Número de cuenta:</strong> 12345678901
+    </p>
+    <p className="text-xs text-gray-500 mt-2">
+      La información se confirmará nuevamente una vez finalices tu compra.
+    </p>
 					</div>
 				</div>
 

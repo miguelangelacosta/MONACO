@@ -58,66 +58,67 @@ export const CardProduct = ({
 
   return (
     <div
-      className="flex flex-col bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-gray-200
-                 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[340px] h-[340px] sm:h-[360px]"
+      className="relative flex flex-col bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 hover:border-orange-400/60 hover:scale-[1.02] w-full max-w-[300px]"
     >
+      {/* Imagen */}
       <Link
         to={`/celulares/${slug}`}
-        className="relative flex flex-col items-center justify-center overflow-hidden"
+        className="relative flex items-center justify-center bg-gray-50 h-[240px] overflow-hidden"
       >
-        {/* Imagen */}
-        <div
-          className="relative w-full bg-gradient-to-b from-yellow-50 to-orange-50 flex items-center justify-center
-                        transition-transform duration-500 group-hover:scale-105
-                        h-[180px] sm:h-[200px] md:h-[220px]"
-        >
-          <img src={img} alt={name} className="object-contain h-full w-full" />
-          {stock === 0 && (
-            <div className="absolute top-3 left-3">
-              <Tag contentTag="agotado" />
-            </div>
-          )}
+        <img
+          src={img}
+          alt={name}
+          className="object-contain w-full h-full transition-transform duration-500 group-hover:scale-110"
+        />
 
-          {/* Botón animado */}
-          <button
-            onClick={handleAddClick}
-            className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 
-                       text-white px-4 sm:px-5 py-2 rounded-full shadow-xl flex items-center gap-2 text-sm sm:text-base 
-                       opacity-0 group-hover:opacity-100 group-hover:bottom-4 transition-all duration-500 ease-out hover:scale-105"
-          >
-            <FiShoppingCart />
-            Añadir
-          </button>
-        </div>
+        {stock === 0 && (
+          <div className="absolute top-3 left-3">
+            <Tag contentTag="agotado" />
+          </div>
+        )}
       </Link>
 
       {/* Info */}
-      <div className="flex flex-col items-center text-center px-3 sm:px-4 py-3 gap-1 sm:gap-2 flex-1">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">
-          {name}
-        </h3>
-        <p className="text-base sm:text-xl font-bold text-gray-800">
-          {formatPrice(price)}
-        </p>
+      <div className="flex flex-col flex-1 justify-between p-4 text-center">
+        <div>
+          <h3 className="text-base font-semibold text-gray-800 hover:text-orange-600 transition-colors line-clamp-2">
+            {name}
+          </h3>
+          <p className="text-xl font-bold text-gray-900 mt-2">
+            {formatPrice(price)}
+          </p>
+        </div>
 
         {/* Colores */}
-        <div className="flex gap-2 mt-2">
+        <div className="flex justify-center gap-2 mt-3 mb-4">
           {colors.map((color) => (
             <span
               key={color.color}
-              className={`w-5 sm:w-6 h-5 sm:h-6 rounded-full cursor-pointer border-2 transition-transform ${
+              className={`w-6 h-6 rounded-full cursor-pointer border-[2.5px] transition-all ${
                 activeColor.color === color.color
                   ? "border-orange-500 scale-110"
-                  : "border-gray-300"
+                  : "border-gray-300 hover:scale-105"
               }`}
               style={{ backgroundColor: color.color }}
               onClick={() => setActiveColor(color)}
             />
           ))}
         </div>
+
+        {/* Botón */}
+        <button
+          onClick={handleAddClick}
+          className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-2 rounded-xl shadow-md hover:shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 active:scale-95"
+        >
+          <FiShoppingCart className="text-lg" />
+          Añadir al carrito
+        </button>
+      </div>
+
+      {/* Cinta promocional opcional */}
+      <div className="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-yellow-400 text-white text-xs font-semibold px-2 py-[3px] rounded-full shadow-sm">
+        Más vendido
       </div>
     </div>
   );
 };
-
-

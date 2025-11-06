@@ -8,14 +8,14 @@ export const Banner = () => {
     {
       id: 1,
       image: "/image/img-banner.jpg",
-      title: "Los mejores monaco del 2025",
+      title: "Los mejores Monaco del 2025",
       subtitle: "Descubre ofertas exclusivas y las últimas novedades",
       link: "/tienda",
       button: "Explorar colección",
     },
     {
       id: 2,
-      image: "/image/img-banner.jpg",
+      image: "/image/img-banner2.jpg",
       title: "Tecnología al mejor precio",
       subtitle: "Tablets, audífonos y accesorios para ti",
       link: "/tienda",
@@ -44,34 +44,28 @@ export const Banner = () => {
   };
 
   return (
-    <div className="relative text-white px-4 md:px-8 mt-6">
+    <div className="relative text-white">
       <Slider {...settings}>
         {slides.map((slide) => (
           <div key={slide.id} className="relative">
-            {/* CONTENEDOR CON BORDES REDONDEADOS */}
-            <div className="relative overflow-hidden rounded-2xl shadow-xl">
-              {/* IMAGEN DE FONDO */}
-              <div
-                className="absolute inset-0 bg-cover bg-center h-[400px] md:h-[550px]"
-                style={{ backgroundImage: `url(${slide.image})` }}
-              />
+            {/* Fondo con imagen y gradiente */}
+            <div
+              className="relative h-[500px] md:h-[650px] w-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${slide.image})` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70"></div>
 
-              {/* OVERLAY OSCURO */}
-              <div className="absolute inset-0 bg-black/60" />
-
-              {/* CONTENIDO */}
-              <div className="relative z-10 flex flex-col items-center justify-center text-center py-24 px-6">
-                <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+              {/* Contenido */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-2xl leading-tight tracking-tight">
                   {slide.title}
                 </h1>
-
-                <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl">
+                <p className="text-lg md:text-2xl mb-8 max-w-2xl opacity-95">
                   {slide.subtitle}
                 </p>
-
                 <Link
                   to={slide.link}
-                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out"
+                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-3 px-10 rounded-full shadow-xl transform hover:scale-105 transition duration-300 ease-in-out"
                 >
                   {slide.button}
                 </Link>
@@ -80,6 +74,9 @@ export const Banner = () => {
           </div>
         ))}
       </Slider>
+
+      {/* Ajuste visual para unirlo al navbar */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-b from-black/60 to-transparent"></div>
     </div>
   );
 };

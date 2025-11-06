@@ -63,7 +63,7 @@ export const FeaturesInput = ({ control, errors }: Props) => {
 
 			<input
 				type='text'
-				placeholder='256Gb de almacenamiento'
+				placeholder='nn'
 				className={`border border-gray-300 py-1.5 text-sm rounded-md px-3 font-medium tracking-tighter text-slate-600 outline-none focus:outline-none ${
 					errors.features ? 'border-red-500' : ''
 				}`}

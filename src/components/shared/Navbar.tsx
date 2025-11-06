@@ -19,13 +19,20 @@ export const Navbar = () => {
   const { data: customer, isLoading: isLoadingCustomer } = useCustomer(userId);
   const { data: role, isLoading: isLoadingRole } = useRoleUser(userId);
 
-  // Mostrar loader mientras carga sesión, cliente o rol
   if (isLoadingSession || isLoadingCustomer || isLoadingRole) {
     return <LuLoader className="animate-spin mx-auto my-4" size={40} />;
   }
 
   return (
-    <header className="bg-white text-black py-4 flex items-center justify-between px-5 border-b border-slate-200 lg:px-12">
+    <header
+      className="
+        fixed top-0 left-0 w-full z-50
+        bg-transparent backdrop-blur-sm
+        text-white transition-all duration-500
+        px-5 py-4 flex items-center justify-between
+        lg:px-12
+      "
+    >
       <Logo />
 
       <nav className="space-x-5 hidden md:flex">
@@ -34,18 +41,17 @@ export const Navbar = () => {
             key={link.id}
             to={link.href}
             className={({ isActive }) =>
-              `${isActive ? 'text-cyan-600 underline' : ''} transition-all duration-300 font-medium hover:text-cyan-600 hover:underline`
+              `${isActive ? 'text-yellow-400 underline' : ''} transition-all duration-300 font-medium hover:text-yellow-400 hover:underline`
             }
           >
             {link.title}
           </NavLink>
         ))}
 
-        {/* Mostrar Dashboard solo si el rol es admin */}
         {role === 'admin' && (
           <NavLink
             to="/dashboard"
-            className="text-red-600 font-semibold hover:underline"
+            className="text-red-400 font-semibold hover:underline"
           >
             Dashboard
           </NavLink>
@@ -61,7 +67,7 @@ export const Navbar = () => {
           <div className="relative">
             <Link
               to="/account"
-              className="border-2 border-slate-700 w-9 h-9 rounded-full grid place-items-center text-lg font-bold"
+              className="border-2 border-white w-9 h-9 rounded-full grid place-items-center text-lg font-bold"
             >
               {customer?.full_name?.[0] || 'U'}
             </Link>
@@ -76,7 +82,7 @@ export const Navbar = () => {
           className="relative"
           onClick={() => openSheet('cart')}
         >
-          <span className="absolute -bottom-2 -right-2 w-5 h-5 grid place-items-center bg-black text-white text-xs rounded-full">
+          <span className="absolute -bottom-2 -right-2 w-5 h-5 grid place-items-center bg-yellow-400 text-black text-xs rounded-full">
             {totalItemsInCart}
           </span>
           <HiOutlineShoppingBag size={25} />

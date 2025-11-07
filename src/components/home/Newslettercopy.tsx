@@ -11,7 +11,9 @@ interface Product {
   name: string;
   images: string[];
   slug?: string;
+  description?: string | { type: string; content: string | string[] };
 }
+
 
 export const NewsletterCopy = () => {
   const [offers, setOffers] = useState<Product[]>([]);
@@ -24,7 +26,7 @@ export const NewsletterCopy = () => {
       try {
         const { data, error } = await supabase
           .from("products")
-          .select("id, name, images, slug")
+          .select("id, name, images, slug, description")
           .order("created_at", { ascending: false })
           .limit(8);
 
@@ -74,6 +76,16 @@ export const NewsletterCopy = () => {
     arrows: true,
   };
 
+  const renderDescription = (desc?: Product["description"]) => {
+    if (!desc) return "Sin descripción disponible.";
+    if (typeof desc === "string") return desc;
+    if (typeof desc === "object") {
+      if (Array.isArray(desc.content)) return desc.content.join(" ");
+      return desc.content || "Sin descripción disponible.";
+    }
+    return "Sin descripción disponible.";
+  };
+
   return (
     <div className="flex flex-col gap-3 my-4 px-2 sm:px-4">
       {/* Barra promocional */}
@@ -83,7 +95,7 @@ export const NewsletterCopy = () => {
             🔥 ¡Oferta Especial del Día!
           </h3>
           <p className="text-xs sm:text-sm md:text-base mt-0.5">
-            Descubre nuestros productos más populares.
+            Descubre nuestros productos más populares con descuentos exclusivos.
           </p>
         </div>
         <button
@@ -100,26 +112,26 @@ export const NewsletterCopy = () => {
       ) : offers.length === 0 ? (
         <p className="text-center text-sm text-gray-500 py-6">No hay productos disponibles.</p>
       ) : (
-        <Slider {...mainSliderSettings}>
-          {offers.map((product) => (
-            <button
-              key={product.id}
-              onClick={() => openModalWithProduct(product)}
-              className="block px-2 focus:outline-none"
-            >
-              <div className="relative w-full aspect-[4/3] bg-gray-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.04]">
-                <img
-                  src={product.images?.[0] || "/placeholder.webp"}
-                  alt={product.name}
-                  className="w-full h-full object-cover rounded-2xl"
-                />
-                <div className="absolute bottom-3 left-3 bg-black/60 text-white px-3 py-1 rounded-xl text-sm sm:text-base font-semibold">
-                  {product.name}
-                </div>
-              </div>
-            </button>
-          ))}
-        </Slider>
+     <Slider {...mainSliderSettings}>
+  {offers.map((product) => (
+    <button
+      key={product.id}
+      onClick={() => openModalWithProduct(product)}
+      className="block px-2 focus:outline-none"
+    >
+      <div className="relative w-full aspect-[1/1] bg-gray-100 rounded-full overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.04]">
+        <img
+          src={product.images?.[0] || "/placeholder.webp"}
+          alt={product.name}
+          className="w-full h-full object-cover rounded-full"
+        />
+     
+
+      </div>
+    </button>
+  ))}
+</Slider>
+
       )}
 
       {/* Modal */}
@@ -132,7 +144,7 @@ export const NewsletterCopy = () => {
       >
         {selectedProduct && (
           <div className="flex flex-col">
-            {/* Carrusel de imágenes */}
+            {/* Carrusel de imágenes del producto */}
             {selectedProduct.images && selectedProduct.images.length > 0 && (
               <Slider {...modalSliderSettings}>
                 {selectedProduct.images.map((img, idx) => (
@@ -146,10 +158,11 @@ export const NewsletterCopy = () => {
               </Slider>
             )}
             <div className="p-4">
-              <h2 className="text-lg sm:text-xl font-bold text-center">
-                {selectedProduct.name}
-              </h2>
-              <div className="mt-4 flex justify-center">
+              <h2 className="text-lg sm:text-xl font-bold">{selectedProduct.name}</h2>
+              <p className="text-sm sm:text-base mt-2">
+                {renderDescription(selectedProduct.description)}
+              </p>
+              <div className="mt-4 flex justify-end">
                 <Link
                   to={`/celulares/${selectedProduct.slug || selectedProduct.id}`}
                   className="bg-yellow-400 text-gray-900 font-semibold px-4 py-2 rounded-xl shadow-md hover:bg-yellow-500 transition-colors duration-200"

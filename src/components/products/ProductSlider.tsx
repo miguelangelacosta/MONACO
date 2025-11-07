@@ -6,71 +6,79 @@ import type { PreparedProducts } from "../../interfaces";
 import { useRef } from "react";
 
 interface Props {
-title: string;
-products: PreparedProducts[];
+  title: string;
+  products: PreparedProducts[];
 }
 
 export const ProductSlider = ({ title, products }: Props) => {
-const sliderRef = useRef<Slider | null>(null);
+  const sliderRef = useRef<Slider | null>(null);
 
-const settings = {
-dots: true,
-infinite: true,
-speed: 800,
-slidesToShow: 4, // Pantalla grande
-slidesToScroll: 1,
-arrows: true,
-autoplay: true,
-autoplaySpeed: 2500,
-cssEase: "ease-in-out",
-pauseOnHover: true,
-responsive: [
-{
-breakpoint: 1024, // Tablet
-settings: { slidesToShow: 3 },
-},
-{
-breakpoint: 768, // Móvil
-settings: { slidesToShow: 2 },
-},
-],
-};
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 800, // ⚡ transiciones más rápidas y suaves
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 2500, // 🕒 velocidad más natural
+    cssEase: "ease-in-out", // 🎢 animación más agradable
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+    ],
+  };
 
-const handleHover = (index: number) => {
-if (window.innerWidth > 768) {
-sliderRef.current?.slickGoTo(index);
-}
-};
+  const handleHover = (index: number) => {
+    // 🧠 centra el slide cuando se pasa el cursor
+    sliderRef.current?.slickGoTo(index);
+  };
 
-return ( <div className="my-16 px-4 sm:px-6 lg:px-12"> <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
-{title} </h2>
+  return (
+    <div className="my-16 px-4 sm:px-6 lg:px-12">
+      <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
+        {title}
+      </h2>
 
-
-  <Slider
-    ref={sliderRef}
-    {...settings}
-    className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-3"
-  >
-    {products.slice(0, 12).map((product, index) => (
-      <div
-        key={product.id}
-        className="flex justify-center transition-transform duration-300 hover:scale-105 cursor-pointer"
-        onMouseEnter={() => handleHover(index)} // hover en desktop
-        onClick={() => sliderRef.current?.slickGoTo(index)} // click/tap en móviles
+      <Slider
+        ref={sliderRef}
+        {...settings}
+        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-3"
       >
-        <CardProduct
-          name={product.name}
-          price={product.price}
-          colors={product.colors}
-          img={product.images[0]}
-          slug={product.slug}
-          variants={product.variants}
-        />
-      </div>
-    ))}
-  </Slider>
-</div>
-
-
-);
+        {products.slice(0, 12).map((product, index) => (
+          <div
+            key={product.id}
+            className="flex justify-center transition-transform duration-300 hover:scale-105 cursor-pointer"
+            onMouseEnter={() => handleHover(index)}
+          >
+            <CardProduct
+              name={product.name}
+              price={product.price}
+              colors={product.colors}
+              img={product.images[0]}
+              slug={product.slug}
+              variants={product.variants}
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
 };

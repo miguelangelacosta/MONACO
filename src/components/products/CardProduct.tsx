@@ -63,7 +63,10 @@ export const CardProduct = ({
   };
 
   return (
-    <div className="relative bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-red-500 shadow-sm hover:shadow-lg transition-all duration-300 group">
+    <div className="relative bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm 
+      hover:shadow-lg transition-all duration-300 group
+      hover:border-red-500"> {/* 👈 borde rojo al pasar el cursor */}
+      
       {/* Imagen del producto */}
       <Link
         to={`/celulares/${slug}`}

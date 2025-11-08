@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { CardProduct } from "../products/CardProduct";
 import type { PreparedProducts } from "../../interfaces";
 import Slider from "react-slick";
@@ -8,33 +9,32 @@ interface Props {
 }
 
 export const ProductSlider = ({ title, products }: Props) => {
-  // Tomamos hasta 12 productos
   const visibleProducts = products.slice(0, 12);
+  const sliderRef = useRef<Slider | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Configuración del slider
+  // Forzar render solo en cliente (SSR/Next.js)
+  useEffect(() => {
+    setIsMounted(true);
+    sliderRef.current?.slickGoTo(0);
+  }, []);
+
   const sliderSettings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4, // default para desktop
+    slidesToShow: 4, // Desktop por defecto
     slidesToScroll: 1,
     arrows: true,
-    className: "[&_.slick-slide]:flex [&_.slick-slide]:justify-center",
     responsive: [
-      {
-        breakpoint: 1280, // pantallas <1280px
-        settings: { slidesToShow: 3 }
-      },
-      {
-        breakpoint: 1024, // pantallas <1024px
-        settings: { slidesToShow: 2 }
-      },
-      {
-        breakpoint: 768, // pantallas <768px
-        settings: { slidesToShow: 1 }
-      }
+      { breakpoint: 1280, settings: { slidesToShow: 4 } }, // desktop grande
+      { breakpoint: 1024, settings: { slidesToShow: 3 } }, // tablet
+      { breakpoint: 768, settings: { slidesToShow: 2 } },  // móvil grande
+      { breakpoint: 0, settings: { slidesToShow: 2 } },    // móviles pequeños
     ],
   };
+
+  if (!isMounted) return null;
 
   return (
     <div className="my-32 px-4 sm:px-6 lg:px-12">
@@ -42,7 +42,11 @@ export const ProductSlider = ({ title, products }: Props) => {
         {title}
       </h2>
 
-      <Slider {...sliderSettings}>
+      <Slider
+        ref={sliderRef}
+        {...sliderSettings}
+        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center"
+      >
         {visibleProducts.map((product) => (
           <div key={product.id} className="w-full px-2">
             <CardProduct {...product} img={product.images[0]} />

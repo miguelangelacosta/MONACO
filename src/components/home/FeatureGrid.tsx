@@ -1,100 +1,94 @@
-import { BiWorld } from 'react-icons/bi';
-import { FaHammer } from 'react-icons/fa6';
-import { HiMiniReceiptRefund } from 'react-icons/hi2';
-import { MdLocalShipping } from 'react-icons/md';
-import Slider from 'react-slick';
+import { BiWorld } from "react-icons/bi";
+import { FaHammer } from "react-icons/fa6";
+import { HiMiniReceiptRefund } from "react-icons/hi2";
+import { MdLocalShipping } from "react-icons/md";
+import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const FeatureGrid = () => {
   const features = [
     {
-      icon: <MdLocalShipping size={40} className="text-white" />,
-      title: "Envíos seguros",
-      description: "En todos nuestros productos",
-      bg: "bg-gradient-to-r from-yellow-400 to-orange-500",
+      icon: <MdLocalShipping size={40} className="text-yellow-600" />,
+      title: "Envíos Rápidos y Seguros",
+      description:
+        "Recibe tus productos en todo el país con entregas seguras y seguimiento en tiempo real.",
     },
     {
-      icon: <HiMiniReceiptRefund size={40} className="text-white" />,
-      title: "Devoluciones",
-      description: "Garantía por defectos de fábrica, no por daños de uso",
-      bg: "bg-gradient-to-r from-pink-500 to-purple-500",
+      icon: <HiMiniReceiptRefund size={40} className="text-yellow-600" />,
+      title: "Garantía y Devoluciones",
+      description:
+        "Compra sin preocupaciones: ofrecemos reemplazos o devoluciones por defectos de fábrica.",
     },
     {
-      icon: <FaHammer size={40} className="text-white" />,
-      title: "Soporte activo",
-      description: "Soporte técnico en cualquier momento",
-      bg: "bg-gradient-to-r from-cyan-500 to-blue-500",
+      icon: <FaHammer size={40} className="text-yellow-600" />,
+      title: "Soporte Técnico 24/7",
+      description:
+        "Nuestro equipo de asistencia está disponible en todo momento para ayudarte.",
     },
     {
-      icon: <BiWorld size={40} className="text-white" />,
-      title: "Garantía",
-      description: "Garantía de 1 mes por defecto de fábrica",
-      bg: "bg-gradient-to-r from-green-400 to-teal-500",
+      icon: <BiWorld size={40} className="text-yellow-600" />,
+      title: "Cobertura Global",
+      description:
+        "Ofrecemos garantía internacional y respaldo en cada uno de nuestros productos.",
     },
   ];
 
-  const settings = {
-    dots: true,
+  // ✅ Configuración compatible con TypeScript
+  const settings: Settings = {
+    dots: false,
     infinite: true,
-    speed: 500,
+    speed: 700,
     autoplay: true,
-    autoplaySpeed: 3000,
-    slidesToShow: 4, // valor base en laptop
+    autoplaySpeed: 4000,
+    slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
     responsive: [
       {
-        breakpoint: 768, // móvil y tablet
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
+        breakpoint: 1280,
+        settings: { slidesToShow: 3, slidesToScroll: 1 },
       },
       {
-        breakpoint: 1280, // pantallas laptop
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
+        breakpoint: 1024,
+        settings: { slidesToShow: 2, slidesToScroll: 1 },
       },
       {
-        breakpoint: 3000, // pantallas grandes o 2K+
-        settings: {
-          slidesToShow: 6,
-          slidesToScroll: 1,
-        },
+        breakpoint: 640,
+        settings: { slidesToShow: 1, slidesToScroll: 1 },
       },
     ],
   };
 
   return (
-    <div className="my-16 px-4 sm:px-8 lg:px-12">
-      <h2 className="text-3xl font-bold text-center mb-10 md:text-4xl lg:text-5xl">
-        Beneficios de comprar con nosotros
+    <section className="my-24 px-4 sm:px-8 lg:px-12 bg-gradient-to-r from-gray-50 via-white to-gray-50 py-16 rounded-2xl">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-14 text-gray-900 tracking-tight">
+        ¿Por qué elegir MONACO?
       </h2>
 
       <Slider {...settings}>
         {features.map((feature, index) => (
-          <div key={index} className="px-2">
+          <div key={index} className="px-4">
             <div
-              className={`flex flex-col items-center justify-center rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 ${feature.bg}`}
-              style={{
-                padding: "1rem",
-                minHeight: "180px",
-              }}
+              className="
+                bg-white border border-gray-100 rounded-3xl
+                flex flex-col items-center justify-center text-center
+                shadow-md hover:shadow-xl hover:-translate-y-2
+                transition-all duration-500 ease-in-out
+                p-10
+              "
             >
-              {feature.icon}
-              <p className="font-semibold text-white text-center mt-2 text-lg">
+              <div className="mb-4">{feature.icon}</div>
+              <p className="font-semibold text-gray-900 text-lg mb-2">
                 {feature.title}
               </p>
-              <p className="text-sm text-white text-center mt-1">
+              <p className="text-gray-500 text-sm leading-relaxed">
                 {feature.description}
               </p>
             </div>
           </div>
         ))}
       </Slider>
-    </div>
+    </section>
   );
 };

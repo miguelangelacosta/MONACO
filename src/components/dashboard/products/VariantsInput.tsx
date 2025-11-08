@@ -18,7 +18,7 @@ interface Props {
 	register: UseFormRegister<ProductFormValues>;
 }
 
-const headersVariants = ['Stock', 'Precio', 'Capacidad', 'Color', ''];
+const headersVariants = ['Stock', 'Precio (COP)', 'descripcion', 'Color', ''];
 
 export const VariantsInput = ({
 	control,
@@ -52,7 +52,7 @@ export const VariantsInput = ({
 		);
 	};
 
-	// Usar useWatch una sola vez para observar todos los valores del color y del colorName
+	// Observa valores del color
 	const colorValues = useWatch({
 		control,
 		name: fields.map(
@@ -68,14 +68,14 @@ export const VariantsInput = ({
 	});
 
 	const getFirstError = (
-		variantErros: FieldErrors<ProductFormValues['variants'][number]>
+		variantErrors: FieldErrors<ProductFormValues['variants'][number]>
 	) => {
-		if (variantErros) {
+		if (variantErrors) {
 			const keys = Object.keys(
-				variantErros
-			) as (keyof typeof variantErros)[];
+				variantErrors
+			) as (keyof typeof variantErrors)[];
 			if (keys.length > 0) {
-				return variantErros[keys[0]]?.message;
+				return variantErrors[keys[0]]?.message;
 			}
 		}
 	};
@@ -85,6 +85,16 @@ export const VariantsInput = ({
 			fields.map((_, index) => prev[index] || false)
 		);
 	}, [fields]);
+
+	// 🔥 Función para formatear precios COP
+	const formatCOP = (value: string | number): string => {
+		const numberValue = Number(String(value).replace(/\D/g, '')) || 0;
+		return new Intl.NumberFormat('es-CO', {
+			style: 'currency',
+			currency: 'COP',
+			minimumFractionDigits: 0,
+		}).format(numberValue);
+	};
 
 	return (
 		<div className='flex flex-col gap-3'>
@@ -99,9 +109,11 @@ export const VariantsInput = ({
 						</p>
 					))}
 				</div>
+
 				{fields.map((field, index) => (
 					<div key={field.id}>
 						<div className='grid grid-cols-5 gap-4 items-center'>
+							{/* STOCK */}
 							<input
 								type='number'
 								placeholder='Stock'
@@ -111,32 +123,45 @@ export const VariantsInput = ({
 								className='border rounded-md px-3 py-1.5 text-xs font-semibold placeholder:font-normal focus:outline-none appearance-none'
 							/>
 
-							<input
-								type='number'
-								step='0.01'
-								placeholder='Precio'
-								{...register(`variants.${index}.price`, {
-									valueAsNumber: true,
-								})}
-								className='border rounded-md px-3 py-1.5 text-xs font-semibold placeholder:font-normal focus:outline-none appearance-none'
-							/>
-
+							{/* PRECIO EN COP */}
 							<input
 								type='text'
-								placeholder='pp'
+								inputMode='numeric'
+								placeholder='$0'
+								className='border rounded-md px-3 py-1.5 text-xs font-semibold text-right focus:outline-none appearance-none'
+								{...register(`variants.${index}.price`, {
+									setValueAs: (val) =>
+										Number(String(val).replace(/\D/g, '')) || 0,
+								})}
+								onBlur={(e) => {
+									const formatted = formatCOP(e.target.value);
+									e.target.value = formatted;
+								}}
+								onFocus={(e) => {
+									// Al enfocar, mostrar solo el número sin formato
+									e.target.value = String(
+										String(e.target.value).replace(/\D/g, '')
+									);
+								}}
+							/>
+
+							{/* descripcion */}
+							<input
+								type='text'
+								placeholder='Ej:peso'
 								{...register(`variants.${index}.storage`)}
 								className='border rounded-md px-3 py-1.5 text-xs font-semibold placeholder:font-normal focus:outline-none appearance-none'
 							/>
 
+							{/* COLOR PICKER */}
 							<div className='flex relative'>
 								{colorActive[index] && (
-									<div className='absolute bg-stone-100 rounded-md bottom-8 left-[40px] p-1 w-[100px] h-fit space-y-2'>
+									<div className='absolute bg-stone-100 rounded-md bottom-8 left-[40px] p-1 w-[100px] h-fit space-y-2 z-10'>
 										<input
 											type='color'
 											{...register(`variants.${index}.color`)}
 											className='rounded-md px-3 py-1.5 w-full'
 										/>
-
 										<input
 											type='text'
 											placeholder='Azul Marino'
@@ -152,7 +177,7 @@ export const VariantsInput = ({
 								>
 									{colorValues[index] && colorNameValues[index] ? (
 										<span
-											className={`inline-block w-4 h-4 rounded-full bg-block`}
+											className={`inline-block w-4 h-4 rounded-full`}
 											style={{
 												backgroundColor: colorValues[index],
 											}}
@@ -163,6 +188,7 @@ export const VariantsInput = ({
 								</button>
 							</div>
 
+							{/* ELIMINAR VARIANTE */}
 							<div className='flex justify-end'>
 								<button
 									type='button'
@@ -174,6 +200,7 @@ export const VariantsInput = ({
 							</div>
 						</div>
 
+						{/* ERRORES */}
 						{errors.variants && errors.variants[index] && (
 							<p className='text-red-500 text-xs mt-1'>
 								{getFirstError(errors.variants[index])}
@@ -183,6 +210,7 @@ export const VariantsInput = ({
 				))}
 			</div>
 
+			{/* BOTÓN AÑADIR VARIANTE */}
 			<button
 				type='button'
 				onClick={addVariant}

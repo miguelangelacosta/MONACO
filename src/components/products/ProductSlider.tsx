@@ -14,11 +14,17 @@ interface ArrowProps {
 
 interface Props {
   title: string;
+  subtitle?: string; // ✅ subtítulo opcional
   products: PreparedProducts[];
-  variant?: "A" | "B"; // ⚡ para distinguir el tipo de animación
+  variant?: "A" | "B"; // ⚡ para distinguir tipo de animación
 }
 
-export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
+export const ProductSlider = ({
+  title,
+  subtitle,
+  products,
+  variant = "A",
+}: Props) => {
   const sliderRef = useRef<Slider | null>(null);
 
   const PrevArrow = ({ className, style, onClick }: ArrowProps) => (
@@ -43,7 +49,7 @@ export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
     </button>
   );
 
-  // 🎢 Diferentes configuraciones según el tipo de slider
+  // 🎢 Configuraciones del slider
   const settings: Settings =
     variant === "A"
       ? {
@@ -64,19 +70,20 @@ export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
             { breakpoint: 1280, settings: { slidesToShow: 4 } },
             { breakpoint: 1024, settings: { slidesToShow: 3 } },
             { breakpoint: 768, settings: { slidesToShow: 2 } },
-            { breakpoint: 480, settings: { slidesToShow: 1 } },
+            { breakpoint: 480, settings: { slidesToShow: 2 } }, // ✅ antes era 1
+            { breakpoint: 380, settings: { slidesToShow: 2 } }, // ✅ aún en móviles pequeños
           ],
         }
       : {
           dots: false,
           infinite: true,
-          speed: 1200, // ⚡ más lento y suave
+          speed: 1200,
           slidesToShow: 6,
-          slidesToScroll: 2, // 🚀 se mueve de a 2 productos
+          slidesToScroll: 2,
           arrows: true,
           autoplay: true,
           autoplaySpeed: 1800,
-          cssEase: "cubic-bezier(0.68, -0.55, 0.27, 1.55)", // 🎬 animación elástica
+          cssEase: "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
           pauseOnHover: false,
           prevArrow: <PrevArrow />,
           nextArrow: <NextArrow />,
@@ -85,20 +92,30 @@ export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
             { breakpoint: 1280, settings: { slidesToShow: 4 } },
             { breakpoint: 1024, settings: { slidesToShow: 3 } },
             { breakpoint: 768, settings: { slidesToShow: 2 } },
-            { breakpoint: 480, settings: { slidesToShow: 1 } },
+            { breakpoint: 480, settings: { slidesToShow: 2 } },
+            { breakpoint: 380, settings: { slidesToShow: 2 } },
           ],
         };
 
   return (
     <div className="relative my-16 px-4 sm:px-6 lg:px-12">
-      <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
+      {/* Título */}
+      <h2 className="text-3xl font-bold text-center mb-3 md:text-4xl lg:text-5xl">
         {title}
       </h2>
 
+      {/* Subtítulo opcional */}
+      {subtitle && (
+        <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8">
+          {subtitle}
+        </p>
+      )}
+
+      {/* Slider */}
       <Slider
         ref={sliderRef}
         {...settings}
-        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-3"
+        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-2 sm:[&_.slick-slide]:px-3"
       >
         {products.slice(0, 18).map((product) => (
           <div

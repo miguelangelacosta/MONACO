@@ -17,7 +17,7 @@ export const ProductSlider = ({ title, products }: Props) => {
     dots: true,
     infinite: true,
     speed: 800,
-    slidesToShow: 4, // base: PCs grandes
+    slidesToShow: 2, // base móvil
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
@@ -26,17 +26,18 @@ export const ProductSlider = ({ title, products }: Props) => {
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1280, // hasta 1280px → laptops
+        breakpoint: 768, // móviles
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 1024, // tablets
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 1280, // laptops
         settings: { slidesToShow: 3 },
       },
-      {
-        breakpoint: 1024, // hasta 1024px → tablets
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 768, // hasta 768px → móviles
-        settings: { slidesToShow: 2 },
-      },
+      // PCs grandes (>1280px) usarán el valor base: 4
     ],
   };
 

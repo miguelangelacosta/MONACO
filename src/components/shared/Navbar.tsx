@@ -7,6 +7,7 @@ import { useGlobalStore } from '../../store/global.store';
 import { useCartStore } from '../../store/cart.store';
 import { useCustomer, useUser, useRoleUser } from '../../hooks';
 import { LuLoader } from 'react-icons/lu';
+import { useEffect } from 'react';
 
 export const Navbar = () => {
   const openSheet = useGlobalStore(state => state.openSheet);
@@ -19,82 +20,96 @@ export const Navbar = () => {
   const { data: customer, isLoading: isLoadingCustomer } = useCustomer(userId);
   const { data: role, isLoading: isLoadingRole } = useRoleUser(userId);
 
+  // Restaurar scroll al desmontar Navbar o al cerrar sesión
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   if (isLoadingSession || isLoadingCustomer || isLoadingRole) {
     return <LuLoader className="animate-spin mx-auto my-4" size={40} />;
   }
 
   return (
-    <header
-      className="
-        fixed top-0 left-0 w-full z-50
-        bg-transparent backdrop-blur-sm
-        text-white transition-all duration-500
-        px-5 py-4 flex items-center justify-between
-        lg:px-12
-      "
-    >
-      <Logo />
+    <>
+      {/* Header */}
+      <header
+        className="
+          fixed top-0 left-0 w-full z-50
+          bg-black bg-opacity-50 backdrop-blur-sm
+          text-white transition-all duration-500
+          px-5 py-4 flex items-center justify-between
+          lg:px-12
+        "
+      >
+        <Logo />
 
-      <nav className="space-x-5 hidden md:flex">
-        {navbarLinks.map(link => (
-          <NavLink
-            key={link.id}
-            to={link.href}
-            className={({ isActive }) =>
-              `${isActive ? 'text-yellow-400 underline' : ''} transition-all duration-300 font-medium hover:text-yellow-400 hover:underline`
-            }
-          >
-            {link.title}
-          </NavLink>
-        ))}
+        {/* Navegación Desktop */}
+        <nav className="space-x-5 hidden md:flex items-center">
+          {navbarLinks.map(link => (
+            <NavLink
+              key={link.id}
+              to={link.href}
+              className={({ isActive }) =>
+                `${isActive ? 'text-yellow-400 underline' : ''} transition-all duration-300 font-medium hover:text-yellow-400 hover:underline`
+              }
+            >
+              {link.title}
+            </NavLink>
+          ))}
 
-        {role === 'admin' && (
-          <NavLink
-            to="/dashboard"
-            className="text-red-400 font-semibold hover:underline"
-          >
-            Dashboard
-          </NavLink>
-        )}
-      </nav>
+          {role === 'admin' && (
+            <NavLink
+              to="/dashboard"
+              className="text-red-400 font-semibold hover:underline"
+            >
+              Dashboard
+            </NavLink>
+          )}
+        </nav>
 
-      <div className="flex gap-5 items-center">
-        <button onClick={() => openSheet('search')}>
-          <HiOutlineSearch size={25} />
-        </button>
+        {/* Botones derecha */}
+        <div className="flex gap-4 items-center">
+          <button onClick={() => openSheet('search')}>
+            <HiOutlineSearch size={25} />
+          </button>
 
-        {session ? (
-          <div className="relative">
+          {session ? (
             <Link
               to="/account"
-              className="border-2 border-white w-9 h-9 rounded-full grid place-items-center text-lg font-bold"
+              className="border-2 border-white w-9 h-9 rounded-full flex items-center justify-center text-lg font-bold"
             >
               {customer?.full_name?.[0] || 'U'}
             </Link>
-          </div>
-        ) : (
-          <Link to="/login">
-            <HiOutlineUser size={25} />
-          </Link>
-        )}
+          ) : (
+            <Link to="/login">
+              <HiOutlineUser size={25} />
+            </Link>
+          )}
 
+          <button
+            className="relative flex items-center"
+            onClick={() => openSheet('cart')}
+          >
+            <HiOutlineShoppingBag size={25} />
+            <span className="ml-1 w-5 h-5 flex items-center justify-center bg-yellow-400 text-black text-xs rounded-full">
+              {totalItemsInCart}
+            </span>
+          </button>
+        </div>
+
+        {/* Botón menú móvil */}
         <button
-          className="relative"
-          onClick={() => openSheet('cart')}
+          className="md:hidden"
+          onClick={() => setActiveNavMobile(true)}
         >
-          <span className="absolute -bottom-2 -right-2 w-5 h-5 grid place-items-center bg-yellow-400 text-black text-xs rounded-full">
-            {totalItemsInCart}
-          </span>
-          <HiOutlineShoppingBag size={25} />
+          <FaBarsStaggered size={25} />
         </button>
-      </div>
+      </header>
 
-      <button
-        className="md:hidden"
-        onClick={() => setActiveNavMobile(true)}
-      >
-        <FaBarsStaggered size={25} />
-      </button>
-    </header>
+      {/* Padding para que el contenido no quede detrás del header */}
+      <div className="h-20 md:h-24" />
+    </>
   );
 };

@@ -66,7 +66,7 @@ export const getRecentProducts = async () => {
 			.from('products')
 			.select('*, variants(*)')
 			.order('created_at', { ascending: false })
-			.limit(4);
+			.limit(20); // 🔹 antes estaba en 4
 
 		if (error) throw new Error(error.message);
 
@@ -81,15 +81,14 @@ export const getRandomProducts = async () => {
 	try {
 		const { data: products, error } = await supabase
 			.from('products')
-			.select('*, variants(*)')
-			.limit(20);
+			.select('*, variants(*)');
 
 		if (error) throw new Error(error.message);
 
-		// Seleccionar 4 productos al azar
+		// 🔹 Tomar 10 productos al azar
 		const randomProducts = (products ?? [])
 			.sort(() => 0.5 - Math.random())
-			.slice(0, 4);
+			.slice(0, 10);
 
 		return randomProducts;
 	} catch (error: any) {
@@ -336,11 +335,7 @@ export const updateProduct = async (
 			.from('variants')
 			.delete()
 			.eq('product_id', productId)
-			.not(
-				'id',
-				'in',
-				`(${currentVariantIds.length > 0 ? currentVariantIds.join(',') : 0})`
-			);
+			.not('id', 'in', `(${currentVariantIds.length > 0 ? currentVariantIds.join(',') : 0})`);
 
 		if (deleteVariantsError) throw new Error(deleteVariantsError.message);
 

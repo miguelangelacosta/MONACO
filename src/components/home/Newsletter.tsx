@@ -1,4 +1,5 @@
 export const Newsletter = () => {
+	
 	return (
 		<div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-24 overflow-hidden">
 			{/* IMAGEN DE FONDO */}
@@ -47,58 +48,55 @@ export const Newsletter = () => {
 					Productos recomendados
 				</h3>
 
-				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-					{/* CARD 1 */}
-					<div className="bg-white text-gray-900 rounded-xl overflow-hidden shadow hover:scale-105 transition-transform duration-200">
-						<img
-							src="/image/product1.webp"
-							alt="Producto 1"
-							className="w-full h-32 object-cover"
-						/>
-						<div className="p-4 text-center">
-							<h4 className="text-sm font-semibold">Auriculares Pro</h4>
-							<p className="text-xs text-gray-500">$149.99</p>
+				{/* GRID RESPONSIVE MEJORADO */}
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+					{[
+						{
+							src: "/image/product1.webp",
+							name: "Auriculares Pro",
+							price: "$149.99",
+						},
+						{
+							src: "/image/product2.webp",
+							name: "Smartwatch Active",
+							price: "$199.99",
+						},
+						{
+							src: "/image/product3.webp",
+							name: "Cámara HD Compacta",
+							price: "$299.99",
+						},
+						{
+							src: "/image/product4.webp",
+							name: "Altavoz Bluetooth",
+							price: "$89.99",
+						},
+						{
+							src: "/image/product5.webp",
+							name: "Teclado Mecánico RGB",
+							price: "$129.99",
+						},
+						{
+							src: "/image/product6.webp",
+							name: "Monitor UltraWide",
+							price: "$499.99",
+						},
+					].map((product, index) => (
+						<div
+							key={index}
+							className="bg-white text-gray-900 rounded-xl overflow-hidden shadow hover:scale-105 transition-transform duration-200"
+						>
+							<img
+								src={product.src}
+								alt={product.name}
+								className="w-full h-32 object-cover"
+							/>
+							<div className="p-4 text-center">
+								<h4 className="text-sm font-semibold">{product.name}</h4>
+								<p className="text-xs text-gray-500">{product.price}</p>
+							</div>
 						</div>
-					</div>
-
-					{/* CARD 2 */}
-					<div className="bg-white text-gray-900 rounded-xl overflow-hidden shadow hover:scale-105 transition-transform duration-200">
-						<img
-							src="/image/product2.webp"
-							alt="Producto 2"
-							className="w-full h-32 object-cover"
-						/>
-						<div className="p-4 text-center">
-							<h4 className="text-sm font-semibold">Smartwatch Active</h4>
-							<p className="text-xs text-gray-500">$199.99</p>
-						</div>
-					</div>
-
-					{/* CARD 3 */}
-					<div className="bg-white text-gray-900 rounded-xl overflow-hidden shadow hover:scale-105 transition-transform duration-200">
-						<img
-							src="/image/product3.webp"
-							alt="Producto 3"
-							className="w-full h-32 object-cover"
-						/>
-						<div className="p-4 text-center">
-							<h4 className="text-sm font-semibold">Cámara HD Compacta</h4>
-							<p className="text-xs text-gray-500">$299.99</p>
-						</div>
-					</div>
-
-					{/* CARD 4 */}
-					<div className="bg-white text-gray-900 rounded-xl overflow-hidden shadow hover:scale-105 transition-transform duration-200">
-						<img
-							src="/image/product4.webp"
-							alt="Producto 4"
-							className="w-full h-32 object-cover"
-						/>
-						<div className="p-4 text-center">
-							<h4 className="text-sm font-semibold">Altavoz Bluetooth</h4>
-							<p className="text-xs text-gray-500">$89.99</p>
-						</div>
-					</div>
+					))}
 				</div>
 			</div>
 		</div>

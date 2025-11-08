@@ -1,9 +1,9 @@
-import { useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardProduct } from "../products/CardProduct";
 import type { PreparedProducts } from "../../interfaces";
+import { useRef } from "react";
 
 interface Props {
   title: string;
@@ -13,52 +13,60 @@ interface Props {
 export const ProductSlider = ({ title, products }: Props) => {
   const sliderRef = useRef<Slider | null>(null);
 
-  // ⚙️ Configuración del slider
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 6,
+    speed: 800, // ⚡ transiciones más rápidas y suaves
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
+    autoplay: true,
+    autoplaySpeed: 2500, // 🕒 velocidad más natural
+    cssEase: "ease-in-out", // 🎢 animación más agradable
+    pauseOnHover: true,
     responsive: [
-      { breakpoint: 1536, settings: { slidesToShow: 5 } },
-      { breakpoint: 1280, settings: { slidesToShow: 4 } },
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 2 } },
-      { breakpoint: 380, settings: { slidesToShow: 1 } },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
     ],
   };
 
-  // 🔁 Forzar recálculo del slider al montar y al cambiar tamaño
-  useEffect(() => {
-    const handleResize = () => {
-      const slider = sliderRef.current as unknown as {
-        innerSlider?: { onWindowResized?: () => void };
-      };
-      slider?.innerSlider?.onWindowResized?.();
-    };
-
-    // Ejecutar una vez y al cambiar el tamaño
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const handleHover = (index: number) => {
+    // 🧠 centra el slide cuando se pasa el cursor
+    sliderRef.current?.slickGoTo(index);
+  };
 
   return (
-    <section className="relative my-16 px-2 sm:px-4 md:px-6 lg:px-12 w-full overflow-hidden">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">{title}</h2>
+    <div className="my-16 px-4 sm:px-6 lg:px-12">
+      <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
+        {title}
+      </h2>
 
       <Slider
         ref={sliderRef}
         {...settings}
-        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-2 sm:[&_.slick-slide]:px-3"
+        className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center [&_.slick-slide]:px-3"
       >
-        {products.slice(0, 18).map((product) => (
+        {products.slice(0, 12).map((product, index) => (
           <div
             key={product.id}
             className="flex justify-center transition-transform duration-300 hover:scale-105 cursor-pointer"
+            onMouseEnter={() => handleHover(index)}
           >
             <CardProduct
               name={product.name}
@@ -71,6 +79,6 @@ export const ProductSlider = ({ title, products }: Props) => {
           </div>
         ))}
       </Slider>
-    </section>
+    </div>
   );
 };

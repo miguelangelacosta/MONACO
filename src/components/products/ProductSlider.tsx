@@ -1,117 +1,55 @@
-import Slider, { Settings } from "react-slick";
+import { useRef, useEffect } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardProduct } from "../products/CardProduct";
 import type { PreparedProducts } from "../../interfaces";
-import { useRef } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-
-interface ArrowProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-}
 
 interface Props {
   title: string;
-  subtitle?: string; // ✅ subtítulo opcional
   products: PreparedProducts[];
-  variant?: "A" | "B"; // ⚡ para distinguir tipo de animación
 }
 
-export const ProductSlider = ({
-  title,
-  subtitle,
-  products,
-  variant = "A",
-}: Props) => {
+export const ProductSlider = ({ title, products }: Props) => {
   const sliderRef = useRef<Slider | null>(null);
 
-  const PrevArrow = ({ className, style, onClick }: ArrowProps) => (
-    <button
-      type="button"
-      className={`${className} absolute -left-6 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300`}
-      style={style}
-      onClick={onClick}
-    >
-      <FaArrowLeft />
-    </button>
-  );
+  // ⚙️ Configuración del slider
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      { breakpoint: 1536, settings: { slidesToShow: 5 } },
+      { breakpoint: 1280, settings: { slidesToShow: 4 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 2 } },
+      { breakpoint: 380, settings: { slidesToShow: 1 } },
+    ],
+  };
 
-  const NextArrow = ({ className, style, onClick }: ArrowProps) => (
-    <button
-      type="button"
-      className={`${className} absolute -right-6 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300`}
-      style={style}
-      onClick={onClick}
-    >
-      <FaArrowRight />
-    </button>
-  );
+  // 🔁 Forzar recálculo del slider al montar y al cambiar tamaño
+  useEffect(() => {
+    const handleResize = () => {
+      const slider = sliderRef.current as unknown as {
+        innerSlider?: { onWindowResized?: () => void };
+      };
+      slider?.innerSlider?.onWindowResized?.();
+    };
 
-  // 🎢 Configuraciones del slider
-  const settings: Settings =
-    variant === "A"
-      ? {
-          dots: true,
-          infinite: true,
-          speed: 700,
-          slidesToShow: 6,
-          slidesToScroll: 1,
-          arrows: true,
-          autoplay: true,
-          autoplaySpeed: 2500,
-          cssEase: "ease-in-out",
-          pauseOnHover: true,
-          prevArrow: <PrevArrow />,
-          nextArrow: <NextArrow />,
-          responsive: [
-            { breakpoint: 1536, settings: { slidesToShow: 5 } },
-            { breakpoint: 1280, settings: { slidesToShow: 4 } },
-            { breakpoint: 1024, settings: { slidesToShow: 3 } },
-            { breakpoint: 768, settings: { slidesToShow: 2 } },
-            { breakpoint: 480, settings: { slidesToShow: 2 } }, // ✅ antes era 1
-            { breakpoint: 380, settings: { slidesToShow: 2 } }, // ✅ aún en móviles pequeños
-          ],
-        }
-      : {
-          dots: false,
-          infinite: true,
-          speed: 1200,
-          slidesToShow: 6,
-          slidesToScroll: 2,
-          arrows: true,
-          autoplay: true,
-          autoplaySpeed: 1800,
-          cssEase: "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
-          pauseOnHover: false,
-          prevArrow: <PrevArrow />,
-          nextArrow: <NextArrow />,
-          responsive: [
-            { breakpoint: 1536, settings: { slidesToShow: 5 } },
-            { breakpoint: 1280, settings: { slidesToShow: 4 } },
-            { breakpoint: 1024, settings: { slidesToShow: 3 } },
-            { breakpoint: 768, settings: { slidesToShow: 2 } },
-            { breakpoint: 480, settings: { slidesToShow: 2 } },
-            { breakpoint: 380, settings: { slidesToShow: 2 } },
-          ],
-        };
+    // Ejecutar una vez y al cambiar el tamaño
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="relative my-16 px-4 sm:px-6 lg:px-12">
-      {/* Título */}
-      <h2 className="text-3xl font-bold text-center mb-3 md:text-4xl lg:text-5xl">
-        {title}
-      </h2>
+    <section className="relative my-16 px-2 sm:px-4 md:px-6 lg:px-12 w-full overflow-hidden">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">{title}</h2>
 
-      {/* Subtítulo opcional */}
-      {subtitle && (
-        <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8">
-          {subtitle}
-        </p>
-      )}
-
-      {/* Slider */}
       <Slider
         ref={sliderRef}
         {...settings}
@@ -133,6 +71,6 @@ export const ProductSlider = ({
           </div>
         ))}
       </Slider>
-    </div>
+    </section>
   );
 };

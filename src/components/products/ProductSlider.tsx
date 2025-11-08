@@ -16,38 +16,37 @@ export const ProductSlider = ({ title, products }: Props) => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 800, // ⚡ transiciones más rápidas y suaves
-    slidesToShow: 2,
+    speed: 800,
+    slidesToShow: 4, // 👈 Mostrar 4 productos en pantallas grandes
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
-    autoplaySpeed: 2500, // 🕒 velocidad más natural
-    cssEase: "ease-in-out", // 🎢 animación más agradable
+    autoplaySpeed: 2500,
+    cssEase: "ease-in-out",
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 768,
+        breakpoint: 1280, // pantallas medianas (hasta 1280px)
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
         },
       },
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // tablets
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 1280,
+        breakpoint: 768, // móviles
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1,
         },
       },
     ],
   };
 
   const handleHover = (index: number) => {
-    // 🧠 centra el slide cuando se pasa el cursor
     sliderRef.current?.slickGoTo(index);
   };
 

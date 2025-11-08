@@ -43,7 +43,7 @@ export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
     </button>
   );
 
-  // 🎢 Configuraciones del slider
+  // 🎢 Diferentes configuraciones según el tipo de slider
   const settings: Settings =
     variant === "A"
       ? {
@@ -63,20 +63,20 @@ export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
             { breakpoint: 1536, settings: { slidesToShow: 5 } },
             { breakpoint: 1280, settings: { slidesToShow: 4 } },
             { breakpoint: 1024, settings: { slidesToShow: 3 } },
-            { breakpoint: 768, settings: { slidesToShow: 3 } }, // 📱 móviles → 3 cards
-            { breakpoint: 480, settings: { slidesToShow: 3 } }, // 📱 móviles pequeños → 3 cards
+            { breakpoint: 768, settings: { slidesToShow: 2 } },
+            { breakpoint: 480, settings: { slidesToShow: 1 } },
           ],
         }
       : {
           dots: false,
           infinite: true,
-          speed: 1200,
+          speed: 1200, // ⚡ más lento y suave
           slidesToShow: 6,
-          slidesToScroll: 2,
+          slidesToScroll: 2, // 🚀 se mueve de a 2 productos
           arrows: true,
           autoplay: true,
           autoplaySpeed: 1800,
-          cssEase: "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
+          cssEase: "cubic-bezier(0.68, -0.55, 0.27, 1.55)", // 🎬 animación elástica
           pauseOnHover: false,
           prevArrow: <PrevArrow />,
           nextArrow: <NextArrow />,
@@ -84,8 +84,8 @@ export const ProductSlider = ({ title, products, variant = "A" }: Props) => {
             { breakpoint: 1536, settings: { slidesToShow: 5 } },
             { breakpoint: 1280, settings: { slidesToShow: 4 } },
             { breakpoint: 1024, settings: { slidesToShow: 3 } },
-            { breakpoint: 768, settings: { slidesToShow: 3 } }, // 📱 móviles → 3 cards
-            { breakpoint: 480, settings: { slidesToShow: 3 } }, // 📱 móviles pequeños → 3 cards
+            { breakpoint: 768, settings: { slidesToShow: 2 } },
+            { breakpoint: 480, settings: { slidesToShow: 1 } },
           ],
         };
 

@@ -97,21 +97,21 @@ export const NewsletterCopy = () => {
 
   return (
     <div className="flex flex-col gap-3 my-6 px-2 sm:px-6">
-      {/* 🔸 Barra Promocional */}
-      <div className="relative bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 py-2 px-4 sm:px-6 md:px-8 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-md">
+      {/* 🎄 Barra Promocional Navideña Compacta */}
+      <div className="relative bg-gradient-to-r from-red-500 via-pink-500 to-yellow-400 text-white py-1 px-4 sm:px-6 md:px-8 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-lg">
         <div className="flex-1 text-center sm:text-left">
-          <h3 className="text-sm sm:text-base md:text-lg font-semibold">
-            🔥 ¡Oferta Especial del Día!
+          <h3 className="text-xs sm:text-sm md:text-base font-bold flex items-center justify-center sm:justify-start gap-2">
+            🎁 ¡Sorpresa Navideña!
           </h3>
-          <p className="text-xs sm:text-sm md:text-base mt-0.5">
-            Descubre nuestros productos más populares con descuentos exclusivos.
+          <p className="text-[10px] sm:text-xs md:text-sm mt-0.5">
+            Descubre nuestros productos más festivos con descuentos exclusivos.
           </p>
         </div>
         <button
           onClick={() => openModalWithProduct()}
-          className="bg-gray-900 text-yellow-400 font-semibold px-4 py-1.5 rounded-full shadow-md hover:bg-gray-800 hover:text-white transition-colors duration-300 text-xs sm:text-sm md:text-base"
+          className="bg-white text-red-500 font-semibold px-3 py-1 rounded-full shadow-md hover:bg-yellow-400 hover:text-white transition-colors duration-300 text-xs sm:text-sm md:text-base flex items-center gap-1"
         >
-          Ver Productos
+          Ver Productos 🎅
         </button>
       </div>
 
@@ -211,3 +211,4 @@ export const NewsletterCopy = () => {
     </div>
   );
 };
+

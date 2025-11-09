@@ -7,7 +7,7 @@ export const Banner = () => {
   const slides = [
     {
       id: 1,
-      image: "/image/img-banner.jpg",
+      image: "/image/img-banner.png",
       title: "Los mejores Monaco del 2025",
       subtitle: "Descubre ofertas exclusivas y las últimas novedades",
       link: "/tienda",
@@ -15,7 +15,7 @@ export const Banner = () => {
     },
     {
       id: 2,
-      image: "/image/img-banner2.jpg",
+      image: "/image/Gemini_Generated_Image_eeojspeeojspeeoj.png",
       title: "Tecnología al mejor precio",
       subtitle: "Tablets, audífonos y accesorios para ti",
       link: "/tienda",
@@ -23,7 +23,7 @@ export const Banner = () => {
     },
     {
       id: 3,
-      image: "/image/img-banner3.jpg",
+      image: "/image/Gemini_Generated_Image_vleciovleciovlec.png",
       title: "Todo para tu oficina o estudio",
       subtitle: "Equipa tu espacio con estilo y eficiencia",
       link: "/tienda",

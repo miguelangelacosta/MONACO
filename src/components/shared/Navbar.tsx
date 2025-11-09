@@ -20,7 +20,6 @@ export const Navbar = () => {
   const { data: customer, isLoading: isLoadingCustomer } = useCustomer(userId);
   const { data: role, isLoading: isLoadingRole } = useRoleUser(userId);
 
-  // Restaurar scroll al desmontar Navbar o al cerrar sesión
   useEffect(() => {
     return () => {
       document.body.style.overflow = 'auto';
@@ -37,13 +36,22 @@ export const Navbar = () => {
       <header
         className="
           fixed top-0 left-0 w-full z-50
-          bg-black bg-opacity-50 backdrop-blur-sm
+          bg-black/10 backdrop-blur-sm
           text-white transition-all duration-500
           px-5 py-4 flex items-center justify-between
           lg:px-12
         "
       >
-        <Logo />
+        {/* Logo con árbol navideño animado girando */}
+        <div className="flex items-center gap-2">
+          <Logo />
+          <div className="relative w-6 h-6">
+            {/* Árbol girando sobre su propio eje */}
+            <span className="block w-full h-full animate-rotate">🎄</span>
+            {/* Lucecitas parpadeando */}
+            <span className="absolute top-0 left-0 w-full h-full animate-blink">✨</span>
+          </div>
+        </div>
 
         {/* Navegación Desktop */}
         <nav className="space-x-5 hidden md:flex items-center">
@@ -110,6 +118,29 @@ export const Navbar = () => {
 
       {/* Padding para que el contenido no quede detrás del header */}
       <div className="h-20 md:h-24" />
+
+      {/* Animaciones CSS */}
+      <style>
+        {`
+          @keyframes rotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+          }
+          .animate-rotate {
+            display: inline-block;
+            animation: rotate 4s linear infinite;
+            transform-style: preserve-3d;
+          }
+
+          @keyframes blink {
+            0%, 49%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+          }
+          .animate-blink {
+            animation: blink 1s infinite;
+          }
+        `}
+      </style>
     </>
   );
 };

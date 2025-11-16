@@ -96,8 +96,14 @@ export const NewsletterCopy = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 my-6 px-2 sm:px-6">
-      {/* 🎄 Barra Promocional Navideña Compacta */}
+    <div
+      className="
+        flex flex-col gap-3 my-6 px-2 sm:px-6
+        bg-gradient-to-b from-pink-100 via-pink-200 to-pink-300 
+        rounded-2xl py-4
+      "
+    >
+      {/* 🎄 Barra Promocional Navideña */}
       <div className="relative bg-gradient-to-r from-red-500 via-pink-500 to-yellow-400 text-white py-1 px-4 sm:px-6 md:px-8 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-lg">
         <div className="flex-1 text-center sm:text-left">
           <h3 className="text-xs sm:text-sm md:text-base font-bold flex items-center justify-center sm:justify-start gap-2">
@@ -126,7 +132,7 @@ export const NewsletterCopy = () => {
               className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                 isActive
                   ? "bg-black text-white"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                  : "bg-white/60 backdrop-blur-md text-gray-800 hover:bg-white"
               }`}
             >
               {brand}
@@ -135,13 +141,13 @@ export const NewsletterCopy = () => {
         })}
       </div>
 
-      {/* 🔹 Slider de productos tipo Shein */}
+      {/* 🔹 Slider de productos */}
       {loading ? (
-        <p className="text-center text-sm text-gray-500 py-6">
+        <p className="text-center text-sm text-gray-700 py-6">
           Cargando productos...
         </p>
       ) : offers.length === 0 ? (
-        <p className="text-center text-sm text-gray-500 py-6">
+        <p className="text-center text-sm text-gray-700 py-6">
           No hay productos disponibles.
         </p>
       ) : (
@@ -152,14 +158,14 @@ export const NewsletterCopy = () => {
               onClick={() => openModalWithProduct(product)}
               className="cursor-pointer flex flex-col items-center transition-transform duration-300 hover:scale-105 px-2"
             >
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden shadow-lg border border-gray-200">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden shadow-lg border border-pink-300 bg-white">
                 <img
                   src={product.images?.[0] || "/placeholder.webp"}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="mt-2 text-xs sm:text-sm text-gray-700 font-medium text-center max-w-[100px] truncate">
+              <p className="mt-2 text-xs sm:text-sm text-gray-900 font-semibold text-center max-w-[100px] truncate">
                 {product.name}
               </p>
             </div>
@@ -167,7 +173,7 @@ export const NewsletterCopy = () => {
         </Slider>
       )}
 
-      {/* 🔹 Modal de producto */}
+      {/* 🔹 Modal */}
       <Modal
         isOpen={modalOpen}
         onRequestClose={closeModal}
@@ -190,7 +196,7 @@ export const NewsletterCopy = () => {
               </Slider>
             )}
             <div className="p-4">
-              <h2 className="text-lg sm:text-xl font-bold">
+              <h2 className="text-lg sm:text-xl font-bold text-pink-600">
                 {selectedProduct.name}
               </h2>
               <p className="text-sm sm:text-base mt-2">
@@ -199,7 +205,7 @@ export const NewsletterCopy = () => {
               <div className="mt-4 flex justify-end">
                 <Link
                   to={`/celulares/${selectedProduct.slug || selectedProduct.id}`}
-                  className="bg-yellow-400 text-gray-900 font-semibold px-4 py-2 rounded-xl shadow-md hover:bg-yellow-500 transition-colors duration-200"
+                  className="bg-pink-500 text-white font-semibold px-4 py-2 rounded-xl shadow-md hover:bg-pink-600 transition-colors duration-200"
                 >
                   Ver Detalles
                 </Link>
@@ -211,4 +217,3 @@ export const NewsletterCopy = () => {
     </div>
   );
 };
-

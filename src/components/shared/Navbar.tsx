@@ -36,19 +36,17 @@ export const Navbar = () => {
       <header
         className="
           fixed top-0 left-0 w-full z-50
-          bg-black/10 backdrop-blur-sm
+          bg-black/5   /* NAVBAR TRANSPARENTE */
           text-white transition-all duration-500
           px-5 py-4 flex items-center justify-between
           lg:px-12
         "
       >
-        {/* Logo con árbol navideño animado girando */}
+        {/* Logo con árbol navideño animado */}
         <div className="flex items-center gap-2">
           <Logo />
           <div className="relative w-6 h-6">
-            {/* Árbol girando sobre su propio eje */}
             <span className="block w-full h-full animate-rotate">🎄</span>
-            {/* Lucecitas parpadeando */}
             <span className="absolute top-0 left-0 w-full h-full animate-blink">✨</span>
           </div>
         </div>
@@ -107,19 +105,16 @@ export const Navbar = () => {
           </button>
         </div>
 
-        {/* Botón menú móvil */}
-        <button
-          className="md:hidden"
-          onClick={() => setActiveNavMobile(true)}
-        >
+        {/* Botón móvil */}
+        <button className="md:hidden" onClick={() => setActiveNavMobile(true)}>
           <FaBarsStaggered size={25} />
         </button>
       </header>
 
-      {/* Padding para que el contenido no quede detrás del header */}
+      {/* Padding */}
       <div className="h-20 md:h-24" />
 
-      {/* Animaciones CSS */}
+      {/* Animaciones */}
       <style>
         {`
           @keyframes rotate {

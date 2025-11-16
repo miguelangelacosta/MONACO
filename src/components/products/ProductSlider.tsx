@@ -10,46 +10,69 @@ interface Props {
 export const ProductSlider = ({ title, products }: Props) => {
   const visibleProducts = products.slice(0, 12);
 
-  // Slider para escritorio
   const desktopSettings = {
     dots: true,
     infinite: true,
-    speed: 800,
+    speed: 700,
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
-    autoplaySpeed: 2500,
+    autoplaySpeed: 2600,
     cssEase: "ease-in-out",
     pauseOnHover: true,
   };
 
   return (
-    <div className="my-16 w-full">
-      <h2 className="text-3xl font-bold text-center mb-8 md:text-4xl lg:text-5xl">
+    <div
+      className="my-10 w-full py-2"  // ← ALTURA MÍNIMA
+      style={{
+        background: "linear-gradient(135deg, #66d1c640 0%, #38b8a640 100%)",
+      }}
+    >
+      <h2
+        className="text-2xl font-bold text-center mb-3 md:text-3xl lg:text-4xl" // ← MÁS BAJO
+        style={{ color: "#1BA6A6" }}
+      >
         {title}
       </h2>
 
-      {/* Móvil: scroll horizontal tipo slider con snap y transición suave */}
-      <div className="flex gap-3 overflow-x-auto pb-4 lg:hidden px-2 scroll-smooth snap-x snap-mandatory">
+      {/* ----------- MÓVIL ----------- */}
+      <div className="lg:hidden flex gap-3 overflow-x-auto px-3 pb-2 scroll-smooth snap-x snap-mandatory">
         {visibleProducts.map((product) => (
           <div
             key={product.id}
-            className="flex-shrink-0 w-[48%] snap-start transition-transform duration-300 hover:scale-105"
+            className="
+              flex-shrink-0 
+              w-[42%] 
+              snap-start 
+              transition-transform 
+              duration-300 
+              hover:scale-100
+              scale-[0.92]     // ← REDUCE SOLO LA ALTURA VISUAL, ANCHO INTACTO
+            "
           >
             <CardProduct {...product} img={product.images[0]} />
           </div>
         ))}
       </div>
 
-      {/* Desktop: slider normal */}
-      <div className="hidden lg:block px-4">
+      {/* ----------- ESCRITORIO ----------- */}
+      <div className="hidden lg:block px-6">
         <Slider
           {...desktopSettings}
-          className="[&_.slick-slide]:flex [&_.slick-slide]:justify-center"
+          className="
+            [&_.slick-slide]:flex 
+            [&_.slick-slide]:justify-center
+            [&_.slick-cloned]:!hidden
+          "
         >
           {visibleProducts.map((product) => (
-            <div key={product.id} className="px-1 transition-transform duration-300 hover:scale-105">
+            <div
+              key={product.id}
+              className="px-3 transition-transform duration-300 hover:scale-100 scale-[0.92]" 
+              // ↑ MENOS ALTO PERO MISMO ANCHO
+            >
               <CardProduct {...product} img={product.images[0]} />
             </div>
           ))}

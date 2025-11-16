@@ -63,11 +63,10 @@ export const CardProduct = ({
   };
 
   return (
-    <div className="relative bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm 
-      hover:shadow-lg transition-all duration-300 group
-      hover:border-red-500"> {/* 👈 borde rojo al pasar el cursor */}
-      
-      {/* Imagen del producto */}
+    <div
+      className="relative bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm 
+      hover:shadow-lg transition-all duration-300 group hover:border-red-500"
+    >
       <Link
         to={`/celulares/${slug}`}
         className="relative block w-full aspect-[3/4] bg-gray-50 overflow-hidden"
@@ -78,21 +77,18 @@ export const CardProduct = ({
           className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
         />
 
-        {/* Etiqueta superior izquierda */}
         {tag && (
           <div className="absolute top-2 left-2 bg-purple-600 text-white text-[10px] sm:text-xs font-bold px-2 py-[2px] rounded-md shadow">
             {tag}
           </div>
         )}
 
-        {/* Descuento */}
         {discount > 0 && (
           <div className="absolute top-2 right-2 bg-red-500 text-white text-[10px] sm:text-xs font-bold px-2 py-[2px] rounded-md shadow">
             -{discount}%
           </div>
         )}
 
-        {/* Botón al hacer hover */}
         <button
           onClick={handleAddClick}
           className="absolute bottom-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-xs sm:text-sm py-2 px-4 rounded-full shadow-md flex items-center gap-1 transition-all duration-300"
@@ -102,21 +98,17 @@ export const CardProduct = ({
         </button>
       </Link>
 
-      {/* Contenido inferior */}
       <div className="p-2 sm:p-3">
-        {/* Nombre */}
         <h3 className="text-xs sm:text-sm text-gray-800 font-medium line-clamp-2 hover:text-orange-500 transition-colors">
           {name}
         </h3>
 
-        {/* Estado */}
         {status && (
           <p className="text-[11px] text-orange-500 font-semibold mt-1">
             {status}
           </p>
         )}
 
-        {/* Precio */}
         <div className="flex items-center gap-2 mt-1">
           {discount > 0 ? (
             <>
